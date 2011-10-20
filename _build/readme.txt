@@ -1,9 +1,3 @@
-﻿Shortcodes for Umbraco provides a filter that will parse your content pages for shortcodes, replacing them with the appropriate value.
+﻿HTTPS Redirect provides a simple mechanism to switch a URL from HTTP to HTTPS (SSL) based on the document-type (alias) or node id.
 
-This initial release uses shortcodes that support Macro parameter syntax and enabled RestExtension methods.
-
-Example shortcodes:
-
-* Place the following shortcode anywhere in your content (RTE, Razor, XSLT or template), and [#pageName] will return the name of the content page.
-
-* To use a RestExtension, try the following syntax: [{alias}:{method}({parameters})] ... e.g. [Shortcodes:Today(yyyy-MM-dd)]
+This package will add the following appSetting keys to your Web.config file: "HttpsRedirect:DocTypes" and "HttpsRedirect:PageIds"
