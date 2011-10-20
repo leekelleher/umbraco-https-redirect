@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.HttpsRedirect", "Our.Umbraco.HttpsRedirect\Our.Umbraco.HttpsRedirect.csproj", "{7FD57B45-1A31-43F2-A170-5A65E1B60156}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9EFECC13-C583-4DE9-8E30-A477A3DF0E63}"
+	ProjectSection(SolutionItems) = preProject
+		MIT-LICENSE.txt = MIT-LICENSE.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco Assemblies", "Umbraco Assemblies", "{2D57EEB4-DD62-45CD-9EE2-5510E18EA961}"
+	ProjectSection(SolutionItems) = preProject
+		_externals\businesslogic.dll = _externals\businesslogic.dll
+		_externals\cms.dll = _externals\cms.dll
+		_externals\interfaces.dll = _externals\interfaces.dll
+		_externals\umbraco.dll = _externals\umbraco.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Package", "Build Package", "{9DDFB5C9-9C62-4F3E-AB75-BAE01CC38869}"
+	ProjectSection(SolutionItems) = preProject
+		_build\BuildPackage.cmd = _build\BuildPackage.cmd
+		_build\BuildPackage.msbuild = _build\BuildPackage.msbuild
+		_build\package.xml = _build\package.xml
+		_build\readme.txt = _build\readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FD57B45-1A31-43F2-A170-5A65E1B60156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FD57B45-1A31-43F2-A170-5A65E1B60156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FD57B45-1A31-43F2-A170-5A65E1B60156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FD57B45-1A31-43F2-A170-5A65E1B60156}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D57EEB4-DD62-45CD-9EE2-5510E18EA961} = {9EFECC13-C583-4DE9-8E30-A477A3DF0E63}
+		{9DDFB5C9-9C62-4F3E-AB75-BAE01CC38869} = {9EFECC13-C583-4DE9-8E30-A477A3DF0E63}
+	EndGlobalSection
+EndGlobal
