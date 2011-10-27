@@ -26,5 +26,8 @@
 	<DictionaryItems />
 	<Languages />
 	<DataTypes />
-	<Actions />
+	<control>/umbraco/plugins/HttpsRedirect/HttpsRedirectInstaller.ascx</control>
+	<Actions>
+		<Action runat="install" undo="true" alias="HttpsRedirect_Uninstaller" />
+	</Actions>
 </umbPackage>

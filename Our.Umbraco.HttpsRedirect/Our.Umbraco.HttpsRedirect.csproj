@@ -37,6 +37,9 @@
     <Reference Include="cms">
       <HintPath>..\_externals\cms.dll</HintPath>
     </Reference>
+    <Reference Include="controls">
+      <HintPath>..\_externals\controls.dll</HintPath>
+    </Reference>
     <Reference Include="interfaces">
       <HintPath>..\_externals\interfaces.dll</HintPath>
     </Reference>
@@ -45,13 +48,31 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.XML" />
     <Reference Include="umbraco">
       <HintPath>..\_externals\umbraco.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\ApplicationEventsHandler.cs" />
+    <Compile Include="Install\HttpsRedirectInstaller.ascx.cs">
+      <DependentUpon>HttpsRedirectInstaller.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Install\HttpsRedirectInstaller.ascx.designer.cs">
+      <DependentUpon>HttpsRedirectInstaller.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PackageActions\AddAppConfigKey.cs" />
+    <Compile Include="PackageActions\Uninstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Install\HttpsRedirectInstaller.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <EmbeddedResource Include="Resources\Images\icon.png" />
+    <EmbeddedResource Include="Resources\Images\logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
