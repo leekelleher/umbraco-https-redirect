@@ -64,6 +64,7 @@ namespace Our.Umbraco.HttpsRedirect.PackageActions
 			var config = WebConfigurationManager.OpenWebConfiguration("~");
 			var appSettings = (AppSettingsSection)config.GetSection("appSettings");
 
+			appSettings.Settings.Remove(key);
 			appSettings.Settings.Add(key, value);
 
 			config.Save(ConfigurationSaveMode.Modified);

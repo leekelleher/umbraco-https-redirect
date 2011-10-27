@@ -37,6 +37,9 @@ namespace Our.Umbraco.HttpsRedirect.PackageActions
 				sb.AppendFormat("<Action runat=\"install\" undo=\"true\" alias=\"HttpsRedirect_AddAppConfigKey\" key=\"{0}\" value=\"false\" />", appKey.Key);
 			}
 
+			// remove the dashboard control (if exists)
+			sb.Append("<Action runat=\"install\" undo=\"true\" alias=\"addDashboardSection\" dashboardAlias=\"HttpsRedirectInstaller\" />");
+
 			// append the closing tag
 			sb.Append("</Actions>");
 

@@ -11,7 +11,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Umbraco Assemblies", "Umbraco Assemblies", "{2D57EEB4-DD62-45CD-9EE2-5510E18EA961}"
 	ProjectSection(SolutionItems) = preProject
 		_externals\businesslogic.dll = _externals\businesslogic.dll
+		_externals\ClientDependency.Core.dll = _externals\ClientDependency.Core.dll
 		_externals\cms.dll = _externals\cms.dll
+		_externals\controls.dll = _externals\controls.dll
 		_externals\interfaces.dll = _externals\interfaces.dll
 		_externals\umbraco.dll = _externals\umbraco.dll
 	EndProjectSection

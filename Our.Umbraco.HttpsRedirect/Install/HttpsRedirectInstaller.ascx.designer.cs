@@ -13,13 +13,13 @@ namespace Our.Umbraco.HttpsRedirect.Install {
     public partial class HttpsRedirectInstaller {
         
         /// <summary>
-        /// Temp control.
+        /// phInstaller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder Temp;
+        protected global::System.Web.UI.WebControls.PlaceHolder phInstaller;
         
         /// <summary>
         /// Success control.
@@ -56,6 +56,24 @@ namespace Our.Umbraco.HttpsRedirect.Install {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPageIds;
+        
+        /// <summary>
+        /// phDashboardControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phDashboardControl;
+        
+        /// <summary>
+        /// cbDashboardControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbDashboardControl;
         
         /// <summary>
         /// btnInstall control.

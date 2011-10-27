@@ -5,7 +5,7 @@
 
 	<p><img src="<%= Logo %>" alt="HTTPS Redirect" /></p>
 
-	<asp:PlaceHolder runat="server">
+	<asp:PlaceHolder runat="server" ID="phInstaller">
 		
 		<umb:Feedback runat="server" ID="Success" type="success" Text="HTTPS Redirect successfully installed!" />
 		<umb:Feedback runat="server" ID="Failure" type="error" Visible="false" />
@@ -13,10 +13,18 @@
 		<p>Now that <strong>HTTPS Redirect</strong> has been installed, you can configure the settings.</p>
 
 		<h2>Document Types</h2>
+		<p>Select the document-types that will redirect to HTTPS:</p>
 		<asp:CheckBoxList runat="server" ID="cblDocTypes"></asp:CheckBoxList>
 
 		<h2>Page/Node Ids</h2>
-		<asp:TextBox runat="server" ID="txtPageIds" />
+		<p>Enter a comma-separated list of specific page/node ids:</p>
+		<asp:TextBox runat="server" ID="txtPageIds" CssClass="umbEditorTextField" />
+
+		<asp:PlaceHolder runat="server" ID="phDashboardControl">
+			<h2>Dashboard control</h2>
+			<p>If you would like to revisit this screen in future, you can add it as a dashboard control to the Developer section.</p>
+			<asp:CheckBox runat="server" ID="cbDashboardControl" Text="Add as dashboard control?" />
+		</asp:PlaceHolder>
 
 		<p>
             <asp:button id="btnInstall" runat="server" Text="Save configuration settings" onclick="btnActivate_Click" onclientclick="jQuery(this).hide(); jQuery('#installingMessage').show(); return true;" />

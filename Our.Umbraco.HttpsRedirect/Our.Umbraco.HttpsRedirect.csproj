@@ -34,6 +34,9 @@
     <Reference Include="businesslogic">
       <HintPath>..\_externals\businesslogic.dll</HintPath>
     </Reference>
+    <Reference Include="ClientDependency.Core">
+      <HintPath>..\_externals\ClientDependency.Core.dll</HintPath>
+    </Reference>
     <Reference Include="cms">
       <HintPath>..\_externals\cms.dll</HintPath>
     </Reference>
