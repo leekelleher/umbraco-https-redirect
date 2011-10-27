@@ -3,8 +3,6 @@ using System.Linq;
 using System.Web.Configuration;
 using umbraco;
 using umbraco.BusinessLogic;
-using umbraco.cms.businesslogic;
-using umbraco.cms.businesslogic.web;
 
 namespace Our.Umbraco.HttpsRedirect.Events
 {
@@ -17,8 +15,6 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private void UmbracoDefault_BeforeRequestInit(object sender, RequestInitEventArgs e)
 		{
-			const string HTTP = "http://";
-			const string HTTPS = "https://";
 			var url = e.Context.Request.Url.ToString().ToLower();
 
 			// check for matches
@@ -28,7 +24,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 				if (!e.Context.Request.IsSecureConnection)
 				{
 					// ... then redirect the URL to HTTPS.
-					e.Context.Response.Redirect(url.Replace(HTTP, HTTPS), true);
+					e.Context.Response.Redirect(url.Replace(Settings.HTTP, Settings.HTTPS), true);
 					return;
 				}
 			}
@@ -37,7 +33,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			if (e.Context.Request.IsSecureConnection)
 			{
 				// ... redirect the URL back to HTTP.
-				e.Context.Response.Redirect(url.Replace(HTTPS, HTTP), true);
+				e.Context.Response.Redirect(url.Replace(Settings.HTTPS, Settings.HTTP), true);
 				return;
 			}
 		}
@@ -49,10 +45,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private bool MatchesDocTypeAlias(string docTypeAlias)
 		{
-			var appSetting = WebConfigurationManager.AppSettings["HttpsRedirect:DocTypes"];
+			var appSetting = WebConfigurationManager.AppSettings[Settings.AppKey_DocTypes];
 			if (!string.IsNullOrEmpty(appSetting))
 			{
-				var docTypes = appSetting.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
+				var docTypes = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
 				if (docTypes != null && docTypes.Contains(docTypeAlias))
 				{
 					return true;
@@ -64,10 +60,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private bool MatchesNodeId(int pageId)
 		{
-			var appSetting = WebConfigurationManager.AppSettings["HttpsRedirect:PageIds"];
+			var appSetting = WebConfigurationManager.AppSettings[Settings.AppKey_PageIds];
 			if (!string.IsNullOrEmpty(appSetting))
 			{
-				var pageIds = Array.ConvertAll(appSetting.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
+				var pageIds = Array.ConvertAll(appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
 
 				if (pageIds != null && pageIds.Contains(pageId))
 				{
