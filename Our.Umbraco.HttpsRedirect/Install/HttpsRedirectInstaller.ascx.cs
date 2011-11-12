@@ -51,18 +51,18 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				{
 					this.txtPageIds.Text = pageIds;
 				}
-
-				// disable the dashboard control checkbox
-				try
-				{
-					var dashboardXml = umbraco.xmlHelper.OpenAsXmlDocument(umbraco.IO.SystemFiles.DashboardConfig);
-					if (dashboardXml.SelectSingleNode("//section[@alias = 'HttpsRedirectInstaller']") != null)
-					{
-						this.phDashboardControl.Visible = false;
-					}
-				}
-				catch { }
 			}
+
+            // disable the dashboard control checkbox
+            try
+            {
+                var dashboardXml = umbraco.xmlHelper.OpenAsXmlDocument(umbraco.IO.SystemFiles.DashboardConfig);
+                if (dashboardXml.SelectSingleNode("//section[@alias = 'HttpsRedirectInstaller']") != null)
+                {
+                    this.phDashboardControl.Visible = false;
+                }
+            }
+            catch { }
 		}
 
 		protected void btnActivate_Click(object sender, EventArgs e)
