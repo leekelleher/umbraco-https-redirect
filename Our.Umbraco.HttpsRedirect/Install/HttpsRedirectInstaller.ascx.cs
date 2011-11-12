@@ -88,6 +88,11 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			{
 				settings.Add(Settings.AppKey_DocTypes, string.Join(Settings.COMMA.ToString(), docTypes.ToArray()));
 			}
+            else
+            {
+                //Clear the field if there is nothing selected
+                settings.Add(Settings.AppKey_DocTypes, string.Empty);
+            }
 
 			// adds the appSettings keys for the page-ids
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
