@@ -8,5 +8,6 @@
 
 	<UsingTask AssemblyFile="$(MSBuildUmbracoTasksLib)" TaskName="MSBuild.Umbraco.Tasks.ManifestUpdate" />
 	<UsingTask AssemblyFile="$(MSBuildUmbracoTasksLib)" TaskName="MSBuild.Umbraco.Tasks.Package" />
+	<UsingTask AssemblyFile="$(MSBuildUmbracoTasksLib)" TaskName="MSBuild.Umbraco.Tasks.TimestampOffset" />
 
 </Project>
