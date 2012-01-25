@@ -7,7 +7,7 @@
 
 	<!-- PROPERTIES -->
 	<PropertyGroup>
-		<PackageVersion>1.0</PackageVersion>
+		<PackageVersion>1.0.1</PackageVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -29,12 +29,12 @@
 			Encoding="ASCII"
 			Files="$(RootDir)\Properties\AssemblyInfo.cs"
 			Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
-			ReplacementText="AssemblyVersion(&quot;$(PackageVersion).0.0&quot;)]" />
+			ReplacementText="AssemblyVersion(&quot;$(PackageVersion).*&quot;)]" />
 		<FileUpdate
 			Encoding="ASCII"
 			Files="$(RootDir)\Properties\AssemblyInfo.cs"
 			Regex="AssemblyFileVersion\(&quot;.*&quot;\)\]"
-			ReplacementText="AssemblyFileVersion(&quot;$(PackageVersion).0.0&quot;)]" />
+			ReplacementText="AssemblyFileVersion(&quot;$(PackageVersion).*&quot;)]" />
 	</Target>
 
 	<!-- COMPILE -->
@@ -49,6 +49,9 @@
 			<PluginFiles Include="$(RootDir)\Install\*.ascx" />
 			<PackageFile Include="$(MSBuildProjectDirectory)\package.xml" />
 		</ItemGroup>
+		<!-- OFFSET TIMESTAMP -->
+		<TimestampOffset Files="@(BinFiles)" Offset="-11" />
+		<!-- COPY FILES -->
 		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BuildDir)\bin" />
 		<Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(BuildDir)\umbraco\plugins\HttpsRedirect" />
 		<Copy SourceFiles="@(PackageFile)" DestinationFolder="$(BuildDir)" />
@@ -64,6 +67,7 @@
 		</ReadLinesFromFile>
 		<ManifestUpdate ManifestFile="$(BuildDir)\package.xml"
 			WorkingDirectory="$(BuildDir)"
+			MinimumRequiredUmbracoVersion="4.7.0"
 			PackageVersion="$(PackageVersion)"
 			Readme="@(Readme->'%(Identity)', '%0a%0d')"
 			Files="@(ManifestFiles)" />

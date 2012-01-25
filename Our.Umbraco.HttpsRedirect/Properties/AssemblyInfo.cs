@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Umbrella Inc Ltd")]
 [assembly: AssemblyProduct("Our.Umbraco.HttpsRedirect")]
-[assembly: AssemblyCopyright("Copyright (c) Umbrella Inc Ltd 2011")]
+[assembly: AssemblyCopyright("Copyright \xa9 Umbrella Inc Ltd 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -18,9 +18,9 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("066de8e5-30d8-4911-a53d-2f21a24add4d")]
+[assembly: Guid("066DE8E5-30D8-4911-A53D-2F21A24ADD4D")]
 
 // Version information for an assembly consists of the following four values:
 // [Major].[Minor].[Build].[Revision]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.*")]
+// [assembly: AssemblyFileVersion("1.0.1.*")]
