@@ -25,8 +25,9 @@ namespace Our.Umbraco.HttpsRedirect.Events
 				{
 					// ... then redirect the URL to HTTPS.
 					e.Context.Response.Redirect(url.Replace(Settings.HTTP, Settings.HTTPS), true);
-					return;
 				}
+
+				return;
 			}
 
 			// otherwise if the URL is on HTTPS...
