@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Configuration;
 using umbraco;
 using umbraco.BusinessLogic;
+using umbraco.cms.businesslogic.template;
 
 namespace Our.Umbraco.HttpsRedirect.Events
 {
@@ -41,38 +42,28 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private bool HasMatch(page page)
 		{
-			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID);
+			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID) || MatchesTemplate(page.Template);
 		}
 
 		private bool MatchesDocTypeAlias(string docTypeAlias)
 		{
-			var appSetting = WebConfigurationManager.AppSettings[Settings.AppKey_DocTypes];
-			if (!string.IsNullOrEmpty(appSetting))
-			{
-				var docTypes = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim());
-				if (docTypes != null && docTypes.Contains(docTypeAlias))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return Settings.KeyContainsValue(Settings.AppKey_DocTypes, docTypeAlias);
 		}
 
 		private bool MatchesNodeId(int pageId)
 		{
-			var appSetting = WebConfigurationManager.AppSettings[Settings.AppKey_PageIds];
-			if (!string.IsNullOrEmpty(appSetting))
-			{
-				var pageIds = Array.ConvertAll(appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries), int.Parse);
-
-				if (pageIds != null && pageIds.Contains(pageId))
-				{
-					return true;
-				}
-			}
-
-			return false;
+			return Settings.KeyContainsValue(Settings.AppKey_PageIds, pageId);
 		}
+
+		private bool MatchesTemplate(int templateId)
+		{
+			var template = new Template(templateId);
+
+			if (template.Id == 0)
+				return false;
+
+			return Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
+		}
+
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Web.Configuration;
 using System.Web.UI;
 using Our.Umbraco.HttpsRedirect;
 
@@ -27,10 +29,13 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string AppKey_PageIds = "HttpsRedirect:PageIds";
 
+		public const string AppKey_Templates = "HttpsRedirect:Templates";
+
 		public static readonly Dictionary<string, string> AppKeys = new Dictionary<string, string>()
 		{
 			{ AppKey_DocTypes, "Document Types" },
-			{ AppKey_PageIds, "Page Ids" }
+			{ AppKey_PageIds, "Page Ids" },
+			{ AppKey_Templates, "Templates" }
 		};
 
 		public static Version Version
@@ -39,6 +44,27 @@ namespace Our.Umbraco.HttpsRedirect
 			{
 				return Assembly.GetExecutingAssembly().GetName().Version;
 			}
+		}
+
+		public static bool KeyContainsValue(string appKey, object value)
+		{
+			var appSetting = WebConfigurationManager.AppSettings[appKey];
+			if (!string.IsNullOrEmpty(appSetting))
+			{
+
+				if (value is int)
+				{
+					var pageIds = Array.ConvertAll(appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries),
+												   int.Parse);
+					return pageIds.Contains((int)value);
+				}
+
+				var values = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries);
+
+				return values.Contains(value);
+			}
+
+			return false;
 		}
 	}
 }
