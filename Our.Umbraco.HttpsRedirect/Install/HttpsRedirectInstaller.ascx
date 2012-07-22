@@ -11,10 +11,20 @@
 		<umb:Feedback runat="server" ID="Failure" type="error" Visible="false" />
 		
 		<p>Now that <strong>HTTPS Redirect</strong> has been installed, you can configure the settings.</p>
-
-		<h2>Document Types</h2>
-		<p>Select the document-types that will redirect to HTTPS:</p>
-		<asp:CheckBoxList runat="server" ID="cblDocTypes"></asp:CheckBoxList>
+		
+		<div style="float: left; margin-right: 15px;">
+			<h2>Document Types</h2>
+			<p>Select the document-types that will redirect to HTTPS:</p>
+			<asp:CheckBoxList runat="server" ID="cblDocTypes"></asp:CheckBoxList>
+		</div>
+		
+		<div style="float: left;">
+			<h2>Templates</h2>
+			<p>Select the templates that will redirect to HTTPS:</p>
+			<asp:CheckBoxList runat="server" ID="cblTemplates"></asp:CheckBoxList>
+		</div>
+		
+		<br style="clear: both;" />
 
 		<h2>Page/Node Ids</h2>
 		<p>Enter a comma-separated list of specific page/node ids:</p>

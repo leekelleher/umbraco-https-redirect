@@ -5,6 +5,7 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
+using umbraco.cms.businesslogic.template;
 using umbraco.cms.businesslogic.web;
 
 namespace Our.Umbraco.HttpsRedirect.Install
@@ -26,6 +27,12 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			this.cblDocTypes.DataTextField = "Text";
 			this.cblDocTypes.DataValueField = "Alias";
 			this.cblDocTypes.DataBind();
+
+			// bind the templates
+			this.cblTemplates.DataSource = Template.GetAllAsList();
+			this.cblTemplates.DataTextField = "Text";
+			this.cblTemplates.DataValueField = "Alias";
+			this.cblTemplates.DataBind();
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -41,6 +48,19 @@ namespace Our.Umbraco.HttpsRedirect.Install
 					foreach (ListItem item in this.cblDocTypes.Items)
 					{
 						item.Selected = docTypes.Contains(item.Value);
+					}
+
+				}
+
+				// populate the templates
+				csv = WebConfigurationManager.AppSettings[Settings.AppKey_Templates];
+				if (!string.IsNullOrWhiteSpace(csv))
+				{
+					var templates = csv.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+					foreach (ListItem item in this.cblTemplates.Items)
+					{
+						item.Selected = templates.Contains(item.Value);
 					}
 
 				}
@@ -73,28 +93,9 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			var settings = new Dictionary<string, string>();
 			var xml = new XmlDocument();
 
-			// loops through the selected doc-types
-			var docTypes = new List<string>();
-			foreach (ListItem item in this.cblDocTypes.Items)
-			{
-				if (item.Selected)
-				{
-					docTypes.Add(item.Value);
-				}
-			}
-
-			// adds the appSettings keys for the doc-types
-			if (docTypes.Count > 0)
-			{
-				settings.Add(Settings.AppKey_DocTypes, string.Join(Settings.COMMA.ToString(), docTypes.ToArray()));
-			}
-            else
-            {
-                //Clear the field if there is nothing selected
-                settings.Add(Settings.AppKey_DocTypes, string.Empty);
-            }
-
-			// adds the appSettings keys for the page-ids
+			// adds the appSettings keys for doctypes, templates, pageIds
+			settings.Add(Settings.AppKey_DocTypes, GetSringFromCheckboxList(cblDocTypes));
+			settings.Add(Settings.AppKey_Templates, GetSringFromCheckboxList(cblTemplates));
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
 
 			foreach (var setting in settings)
@@ -131,6 +132,28 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				this.Success.Text = "Successfully installed the following settings: " + string.Join(", ", successes.ToArray());
 				this.Success.Visible = true;
 			}
+		}
+
+		private string GetSringFromCheckboxList(CheckBoxList cbl)
+		{
+			// loops through the selected list items
+			var selectedItems = new List<string>();
+			foreach (ListItem item in cbl.Items)
+			{
+				if (item.Selected)
+				{
+					selectedItems.Add(item.Value);
+				}
+			}
+
+			// create a csv string
+			if (selectedItems.Count > 0)
+			{
+				return string.Join(Settings.COMMA.ToString(), selectedItems.ToArray());
+			}
+
+			//Clear the field if there is nothing selected
+			return string.Empty;
 		}
 	}
 }
