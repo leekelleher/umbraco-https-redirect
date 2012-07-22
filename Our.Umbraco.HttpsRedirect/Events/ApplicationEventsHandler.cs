@@ -18,8 +18,13 @@ namespace Our.Umbraco.HttpsRedirect.Events
 		{
 			var url = e.Context.Request.Url.ToString().ToLower();
 
+			var page = e.Page;
+
+			if (page == null)
+				return;
+
 			// check for matches
-			if (this.HasMatch(e.Page))
+			if (this.HasMatch(page))
 			{
 				// if the doc-type matches and is NOT on HTTPS...
 				if (!e.Context.Request.IsSecureConnection)
