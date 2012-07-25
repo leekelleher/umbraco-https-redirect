@@ -4,7 +4,7 @@
 	<info>
 		<package>
 			<name>HTTPS Redirect</name>
-			<version>1.0</version>
+			<version>0.0.0</version>
 			<license url="http://www.opensource.org/licenses/mit-license.php">MIT license</license>
 			<url>http://our.umbraco.org/projects/website-utilities/https-redirect</url>
 			<requirements>
@@ -14,7 +14,7 @@
 			</requirements>
 		</package>
 		<author>
-			<name>Lee Kelleher, Darren Ferguson, Rich Green</name>
+			<name>Lee Kelleher, Darren Ferguson, Rich Green, Tom Fulton</name>
 			<website>http://our.umbraco.org/people</website>
 		</author>
 		<readme><![CDATA[]]></readme>
