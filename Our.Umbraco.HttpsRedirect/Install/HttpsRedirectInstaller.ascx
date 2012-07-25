@@ -37,13 +37,14 @@
 		</asp:PlaceHolder>
 
 		<p>
-            <asp:button id="btnInstall" runat="server" Text="Save configuration settings" onclick="btnActivate_Click" onclientclick="jQuery(this).hide(); jQuery('#installingMessage').show(); return true;" />
-            <div style="display: none;" id="installingMessage">
-                <umb:ProgressBar runat="server" />
-                <br />
-                <em>&nbsp; &nbsp;Saving configuration settings, please wait...</em><br />
-            </div>
-        </p>
+			<asp:Button id="btnInstall" runat="server" Text="Save configuration settings" onclick="btnActivate_Click" onclientclick="jQuery(this).hide(); jQuery('#installingMessage').show(); return true;" />
+			<div style="display: none;" id="installingMessage">
+				<umb:ProgressBar runat="server" />
+				<br />
+				<em>&nbsp; &nbsp;Saving configuration settings, please wait...</em>
+				<br />
+			</div>
+		</p>
 
 	</asp:PlaceHolder>
 

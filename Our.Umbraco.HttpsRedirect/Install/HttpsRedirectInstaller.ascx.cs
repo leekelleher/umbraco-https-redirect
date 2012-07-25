@@ -5,8 +5,12 @@ using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
+using umbraco;
+using umbraco.cms.businesslogic.packager;
 using umbraco.cms.businesslogic.template;
 using umbraco.cms.businesslogic.web;
+using umbraco.IO;
+using umbraco.uicontrols;
 
 namespace Our.Umbraco.HttpsRedirect.Install
 {
@@ -73,36 +77,35 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				}
 			}
 
-            // disable the dashboard control checkbox
-            try
-            {
-                var dashboardXml = umbraco.xmlHelper.OpenAsXmlDocument(umbraco.IO.SystemFiles.DashboardConfig);
-                if (dashboardXml.SelectSingleNode("//section[@alias = 'HttpsRedirectInstaller']") != null)
-                {
-                    this.phDashboardControl.Visible = false;
-                }
-            }
-            catch { }
+			// disable the dashboard control checkbox
+			try
+			{
+				var dashboardXml = xmlHelper.OpenAsXmlDocument(SystemFiles.DashboardConfig);
+				if (dashboardXml.SelectSingleNode("//section[@alias = 'HttpsRedirectInstaller']") != null)
+				{
+					this.phDashboardControl.Visible = false;
+				}
+			}
+			catch { }
 		}
 
 		protected void btnActivate_Click(object sender, EventArgs e)
 		{
 			var failures = new List<string>();
 			var successes = new List<string>();
-
 			var settings = new Dictionary<string, string>();
 			var xml = new XmlDocument();
 
 			// adds the appSettings keys for doctypes, templates, pageIds
-			settings.Add(Settings.AppKey_DocTypes, GetSringFromCheckboxList(cblDocTypes));
-			settings.Add(Settings.AppKey_Templates, GetSringFromCheckboxList(cblTemplates));
+			settings.Add(Settings.AppKey_DocTypes, GetStringFromCheckboxList(this.cblDocTypes));
+			settings.Add(Settings.AppKey_Templates, GetStringFromCheckboxList(this.cblTemplates));
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
 
 			foreach (var setting in settings)
 			{
 				var title = Settings.AppKeys[setting.Key];
 				xml.LoadXml(string.Format("<Action runat=\"install\" undo=\"true\" alias=\"HttpsRedirect_AddAppConfigKey\" key=\"{0}\" value=\"{1}\" />", setting.Key, setting.Value));
-				umbraco.cms.businesslogic.packager.PackageAction.RunPackageAction(title, "HttpsRedirect_AddAppConfigKey", xml.FirstChild);
+				PackageAction.RunPackageAction(title, "HttpsRedirect_AddAppConfigKey", xml.FirstChild);
 				successes.Add(title);
 			}
 
@@ -110,7 +113,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			{
 				var title = "Dashboard control";
 				xml.LoadXml("<Action runat=\"install\" undo=\"true\" alias=\"addDashboardSection\" dashboardAlias=\"HttpsRedirectInstaller\"><section><areas><area>developer</area></areas><tab caption=\"HttpsRedirect: Settings\"><control>/umbraco/plugins/HttpsRedirect/HttpsRedirectInstaller.ascx</control></tab></section></Action>");
-				umbraco.cms.businesslogic.packager.PackageAction.RunPackageAction(title, "addDashboardSection", xml.FirstChild);
+				PackageAction.RunPackageAction(title, "addDashboardSection", xml.FirstChild);
 				successes.Add(title);
 			}
 
@@ -120,7 +123,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			// display failure messages
 			if (failures.Count > 0)
 			{
-				this.Failure.type = umbraco.uicontrols.Feedback.feedbacktype.error;
+				this.Failure.type = Feedback.feedbacktype.error;
 				this.Failure.Text = "There were errors with the following settings:<br />" + string.Join("<br />", failures.ToArray());
 				this.Failure.Visible = true;
 			}
@@ -128,13 +131,13 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			// display success messages
 			if (successes.Count > 0)
 			{
-				this.Success.type = umbraco.uicontrols.Feedback.feedbacktype.success;
+				this.Success.type = Feedback.feedbacktype.success;
 				this.Success.Text = "Successfully installed the following settings: " + string.Join(", ", successes.ToArray());
 				this.Success.Visible = true;
 			}
 		}
 
-		private string GetSringFromCheckboxList(CheckBoxList cbl)
+		private string GetStringFromCheckboxList(CheckBoxList cbl)
 		{
 			// loops through the selected list items
 			var selectedItems = new List<string>();
@@ -152,7 +155,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				return string.Join(Settings.COMMA.ToString(), selectedItems.ToArray());
 			}
 
-			//Clear the field if there is nothing selected
+			// clear the field if there is nothing selected
 			return string.Empty;
 		}
 	}

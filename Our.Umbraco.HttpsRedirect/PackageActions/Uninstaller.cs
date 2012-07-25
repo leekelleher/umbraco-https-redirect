@@ -30,7 +30,7 @@ namespace Our.Umbraco.HttpsRedirect.PackageActions
 
 			// build XML string for all the installable components
 			var sb = new StringBuilder("<Actions>");
-			
+
 			// loop through each of the appSettings keys
 			foreach (var appKey in Settings.AppKeys)
 			{
