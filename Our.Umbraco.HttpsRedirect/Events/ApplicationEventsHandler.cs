@@ -11,10 +11,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 	{
 		public EventsHandler()
 		{
-			UmbracoDefault.BeforeRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefault_BeforeRequestInit);
+			UmbracoDefault.AfterRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefault_AfterRequestInit);
 		}
 
-		private void UmbracoDefault_BeforeRequestInit(object sender, RequestInitEventArgs e)
+		private void UmbracoDefault_AfterRequestInit(object sender, RequestInitEventArgs e)
 		{
 			var url = e.Context.Request.Url.ToString().ToLower();
 
