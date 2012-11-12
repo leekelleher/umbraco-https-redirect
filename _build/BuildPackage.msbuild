@@ -7,7 +7,10 @@
 
 	<!-- PROPERTIES -->
 	<PropertyGroup>
-		<PackageVersion>1.1.0</PackageVersion>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>1</VersionMinor>
+		<VersionPatch>1</VersionPatch>
+		<VersionSuffix></VersionSuffix>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -25,16 +28,15 @@
 
 	<!-- UPDATE ASSEMBLEY VERSION -->
 	<Target Name="UpdateAssemblyInfo" DependsOnTargets="Clean">
-		<FileUpdate
-			Encoding="ASCII"
-			Files="$(RootDir)\Properties\AssemblyInfo.cs"
-			Regex="AssemblyVersion\(&quot;.*&quot;\)\]"
-			ReplacementText="AssemblyVersion(&quot;$(PackageVersion).*&quot;)]" />
-		<FileUpdate
-			Encoding="ASCII"
-			Files="$(RootDir)\Properties\AssemblyInfo.cs"
-			Regex="AssemblyFileVersion\(&quot;.*&quot;\)\]"
-			ReplacementText="AssemblyFileVersion(&quot;$(PackageVersion).*&quot;)]" />
+		<Version Major="$(VersionMajor)" Minor="$(VersionMinor)" BuildType="Automatic" RevisionType="Automatic" StartDate="20/10/2011">
+			<Output TaskParameter="Build" PropertyName="Build" />
+			<Output TaskParameter="Revision" PropertyName="Revision" />
+		</Version>
+		<AssemblyInfo CodeLanguage="CS"
+			OutputFile="$(RootDir)\Properties\VersionInfo.cs"
+			AssemblyVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)"
+			AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(Build).$(Revision)"
+			AssemblyInformationalVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionSuffix)"/>
 	</Target>
 
 	<!-- COMPILE -->
@@ -68,7 +70,7 @@
 		<ManifestUpdate ManifestFile="$(BuildDir)\package.xml"
 			WorkingDirectory="$(BuildDir)"
 			MinimumRequiredUmbracoVersion="4.7.0"
-			PackageVersion="$(PackageVersion)"
+			PackageVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionSuffix)"
 			Readme="@(Readme->'%(Identity)', '%0a%0d')"
 			Files="@(ManifestFiles)" />
 	</Target>
