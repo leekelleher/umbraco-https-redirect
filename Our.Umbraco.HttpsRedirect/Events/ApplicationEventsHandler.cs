@@ -22,6 +22,11 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 			if (page == null)
 				return;
+            
+            if (this.ShouldStripPort())
+            {
+                url = StripPortFromUrl(url, e.Context.Request.Url);
+            }
 
 			// check for matches
 			if (this.HasMatch(page))
@@ -44,6 +49,19 @@ namespace Our.Umbraco.HttpsRedirect.Events
 				return;
 			}
 		}
+
+        private string StripPortFromUrl(string url, Uri contextUri)
+        {
+            return url.Replace(string.Format(":{0}", contextUri.Port), "");
+        }
+
+        private bool ShouldStripPort()
+        {
+            var stripPortString = Settings.GetValueFromKey(Settings.AppKey_StripPort);
+            bool strip = false;
+            bool.TryParse(stripPortString, out strip);
+            return strip;
+        }
 
 		private bool HasMatch(page page)
 		{

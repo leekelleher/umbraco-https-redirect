@@ -30,6 +30,12 @@
 		<p>Enter a comma-separated list of specific page/node ids:</p>
 		<asp:TextBox runat="server" ID="txtPageIds" CssClass="umbEditorTextField" />
 
+		<br style="clear: both;" />
+
+		<h2>Strip Port Number</h2>
+		<p>Choose whether the port number portion of the URL should be stripped. Useful if you use non-standard ports internal to your firewall:</p>
+		<asp:CheckBox runat="server" ID="chkStripPort" Test="Strip Port numbers" />
+
 		<asp:PlaceHolder runat="server" ID="phDashboardControl">
 			<h2>Dashboard control</h2>
 			<p>If you would like to revisit this screen in future, you can add it as a dashboard control to the Developer section.</p>

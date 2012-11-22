@@ -25,7 +25,9 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string PNG_MIME = "image/png";
 
-		public const string AppKey_DocTypes = "HttpsRedirect:DocTypes";
+        public const string AppKey_StripPort = "HttpsRedirect:StripPort";
+        
+        public const string AppKey_DocTypes = "HttpsRedirect:DocTypes";
 
 		public const string AppKey_PageIds = "HttpsRedirect:PageIds";
 
@@ -35,7 +37,8 @@ namespace Our.Umbraco.HttpsRedirect
 		{
 			{ AppKey_DocTypes, "Document Types" },
 			{ AppKey_PageIds, "Page Ids" },
-			{ AppKey_Templates, "Templates" }
+			{ AppKey_Templates, "Templates" },
+			{ AppKey_StripPort, "Strip Port" }
 		};
 
 		public static Version Version
@@ -45,6 +48,11 @@ namespace Our.Umbraco.HttpsRedirect
 				return Assembly.GetExecutingAssembly().GetName().Version;
 			}
 		}
+
+        public static string GetValueFromKey(string appKey)
+        {
+            return WebConfigurationManager.AppSettings[appKey];
+        }
 
 		public static bool KeyContainsValue(string appKey, object value)
 		{
