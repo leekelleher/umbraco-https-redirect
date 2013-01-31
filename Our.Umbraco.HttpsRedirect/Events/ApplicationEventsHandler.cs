@@ -16,7 +16,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private void UmbracoDefault_AfterRequestInit(object sender, RequestInitEventArgs e)
 		{
-			var url = e.Context.Request.Url.ToString().ToLower();
+			var url = e.Context.Request.Url.ToString(); // .ToLower(); also lowercases query string which caused us issues (DF)
 
 			var page = e.Page;
 
