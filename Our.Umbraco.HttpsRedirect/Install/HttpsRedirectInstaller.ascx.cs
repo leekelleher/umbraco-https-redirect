@@ -44,7 +44,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			if (!this.IsPostBack)
 			{
 				// populate the doc-types
-				var csv = WebConfigurationManager.AppSettings[Settings.AppKey_DocTypes];
+				var csv = Settings.GetValueFromKey(Settings.AppKey_DocTypes);
 				if (!string.IsNullOrWhiteSpace(csv))
 				{
 					var docTypes = csv.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -57,7 +57,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				}
 
 				// populate the templates
-				csv = WebConfigurationManager.AppSettings[Settings.AppKey_Templates];
+				csv = Settings.GetValueFromKey(Settings.AppKey_Templates);
 				if (!string.IsNullOrWhiteSpace(csv))
 				{
 					var templates = csv.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -69,23 +69,20 @@ namespace Our.Umbraco.HttpsRedirect.Install
 
 				}
 
-                // populate the page-ids
-                var pageIds = WebConfigurationManager.AppSettings[Settings.AppKey_PageIds];
-                if (!string.IsNullOrWhiteSpace(pageIds))
-                {
-                    this.txtPageIds.Text = pageIds;
-                }
+				// populate the page-ids
+				var pageIds = Settings.GetValueFromKey(Settings.AppKey_PageIds);
+				if (!string.IsNullOrWhiteSpace(pageIds))
+				{
+					this.txtPageIds.Text = pageIds;
+				}
 
-                // populate Strip Port
-                var stripPort = WebConfigurationManager.AppSettings[Settings.AppKey_StripPort];
-			    bool stripPortVal = false;
-                if (!string.IsNullOrWhiteSpace(stripPort))
-                {
-                    if (bool.TryParse(stripPort, out stripPortVal))
-                    {
-                        this.chkStripPort.Checked = stripPortVal;
-                    }
-                }
+				// populate strip port
+				bool stripPortVal;
+				var stripPort = Settings.GetValueFromKey(Settings.AppKey_StripPort);
+				if (!string.IsNullOrWhiteSpace(stripPort) && bool.TryParse(stripPort, out stripPortVal))
+				{
+					this.chkStripPort.Checked = stripPortVal;
+				}
 			}
 
 			// disable the dashboard control checkbox
@@ -110,8 +107,8 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			// adds the appSettings keys for doctypes, templates, pageIds
 			settings.Add(Settings.AppKey_DocTypes, GetStringFromCheckboxList(this.cblDocTypes));
 			settings.Add(Settings.AppKey_Templates, GetStringFromCheckboxList(this.cblTemplates));
-            settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
-            settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
+			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
+			settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
 
 			foreach (var setting in settings)
 			{

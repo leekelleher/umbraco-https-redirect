@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Web.Configuration;
 using umbraco;
 using umbraco.BusinessLogic;
 using umbraco.cms.businesslogic.template;
@@ -11,10 +9,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 	{
 		public EventsHandler()
 		{
-			UmbracoDefault.AfterRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefault_AfterRequestInit);
+			UmbracoDefault.AfterRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefaultAfterRequestInit);
 		}
 
-		private void UmbracoDefault_AfterRequestInit(object sender, RequestInitEventArgs e)
+		private void UmbracoDefaultAfterRequestInit(object sender, RequestInitEventArgs e)
 		{
 			var url = e.Context.Request.Url.ToString(); // .ToLower(); also lowercases query string which caused us issues (DF)
 
@@ -22,14 +20,15 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 			if (page == null)
 				return;
-            
-            if (this.ShouldStripPort())
-            {
-                url = StripPortFromUrl(url, e.Context.Request.Url);
-            }
+
+			// check if the port should be stripped.
+			if (ShouldStripPort())
+			{
+				url = StripPortFromUrl(url, e.Context.Request.Url);
+			}
 
 			// check for matches
-			if (this.HasMatch(page))
+			if (HasMatch(page))
 			{
 				// if the doc-type matches and is NOT on HTTPS...
 				if (!e.Context.Request.IsSecureConnection)
@@ -50,42 +49,44 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			}
 		}
 
-        private string StripPortFromUrl(string url, Uri contextUri)
-        {
-            return url.Replace(string.Format(":{0}", contextUri.Port), "");
-        }
+		private static string StripPortFromUrl(string url, Uri contextUri)
+		{
+			return url.Replace(string.Format(":{0}", contextUri.Port), string.Empty);
+		}
 
-        private bool ShouldStripPort()
-        {
-            var stripPortString = Settings.GetValueFromKey(Settings.AppKey_StripPort);
-            bool strip = false;
-            bool.TryParse(stripPortString, out strip);
-            return strip;
-        }
+		private static bool ShouldStripPort()
+		{
+			bool strip;
+			var stripPortString = Settings.GetValueFromKey(Settings.AppKey_StripPort);
 
-		private bool HasMatch(page page)
+			if (!string.IsNullOrWhiteSpace(stripPortString) && bool.TryParse(stripPortString, out strip))
+			{
+				return strip;
+			}
+
+			return false;
+		}
+
+		private static bool HasMatch(page page)
 		{
 			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID) || MatchesTemplate(page.Template);
 		}
 
-		private bool MatchesDocTypeAlias(string docTypeAlias)
+		private static bool MatchesDocTypeAlias(string docTypeAlias)
 		{
 			return Settings.KeyContainsValue(Settings.AppKey_DocTypes, docTypeAlias);
 		}
 
-		private bool MatchesNodeId(int pageId)
+		private static bool MatchesNodeId(int pageId)
 		{
 			return Settings.KeyContainsValue(Settings.AppKey_PageIds, pageId);
 		}
 
-		private bool MatchesTemplate(int templateId)
+		private static bool MatchesTemplate(int templateId)
 		{
 			var template = new Template(templateId);
 
-			if (template.Id == 0)
-				return false;
-
-			return Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
+			return template.Id != 0 && Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
 		}
 
 	}

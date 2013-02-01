@@ -25,11 +25,11 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string PNG_MIME = "image/png";
 
-        public const string AppKey_StripPort = "HttpsRedirect:StripPort";
-        
-        public const string AppKey_DocTypes = "HttpsRedirect:DocTypes";
+		public const string AppKey_DocTypes = "HttpsRedirect:DocTypes";
 
 		public const string AppKey_PageIds = "HttpsRedirect:PageIds";
+
+		public const string AppKey_StripPort = "HttpsRedirect:StripPort";
 
 		public const string AppKey_Templates = "HttpsRedirect:Templates";
 
@@ -49,16 +49,16 @@ namespace Our.Umbraco.HttpsRedirect
 			}
 		}
 
-        public static string GetValueFromKey(string appKey)
-        {
-            return WebConfigurationManager.AppSettings[appKey];
-        }
+		public static string GetValueFromKey(string appKey)
+		{
+			return WebConfigurationManager.AppSettings[appKey];
+		}
 
 		public static bool KeyContainsValue(string appKey, object value)
 		{
 			if (!string.IsNullOrWhiteSpace(appKey))
 			{
-				var appSetting = WebConfigurationManager.AppSettings[appKey];
+				var appSetting = GetValueFromKey(appKey);
 				if (!string.IsNullOrWhiteSpace(appSetting))
 				{
 					var values = appSetting.Split(new[] { COMMA }, StringSplitOptions.RemoveEmptyEntries);
