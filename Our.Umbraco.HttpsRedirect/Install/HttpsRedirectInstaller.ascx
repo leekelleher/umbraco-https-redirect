@@ -32,6 +32,12 @@
 
 		<br style="clear: both;" />
 
+		<h2>Property Aliases</h2>
+		<p>Enter a comma-separated list of property aliases of checkbox-based properties:</p>
+		<asp:TextBox runat="server" ID="txtPropertyAliases" CssClass="umbEditorTextField" />
+
+		<br style="clear: both;" />
+
 		<h2>Strip Port Number</h2>
 		<p>Choose whether the port number portion of the URL should be stripped. Useful if you use non-standard ports internal to your firewall:</p>
 		<asp:CheckBox runat="server" ID="chkStripPort" Text="Strip port numbers?" />

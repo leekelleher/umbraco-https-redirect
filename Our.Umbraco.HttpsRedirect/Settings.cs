@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,11 +25,15 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string PNG_MIME = "image/png";
 
+		public const string CHECKBOX_TRUE = "1";
+
 		public const string AppKey_DocTypes = "HttpsRedirect:DocTypes";
 
 		public const string AppKey_PageIds = "HttpsRedirect:PageIds";
 
 		public const string AppKey_StripPort = "HttpsRedirect:StripPort";
+
+		public const string AppKey_PropertyAliases = "HttpsRedirect:PropertyAliases";
 
 		public const string AppKey_Templates = "HttpsRedirect:Templates";
 
@@ -38,6 +42,7 @@ namespace Our.Umbraco.HttpsRedirect
 			{ AppKey_DocTypes, "Document Types" },
 			{ AppKey_PageIds, "Page Ids" },
 			{ AppKey_Templates, "Templates" },
+			{ AppKey_PropertyAliases, "Property Aliases" },
 			{ AppKey_StripPort, "Strip Port" }
 		};
 

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using umbraco;
 using umbraco.BusinessLogic;
+using umbraco.NodeFactory;
 using umbraco.cms.businesslogic.template;
 
 namespace Our.Umbraco.HttpsRedirect.Events
@@ -69,7 +70,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static bool HasMatch(page page)
 		{
-			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID) || MatchesTemplate(page.Template);
+			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID) || MatchesTemplate(page.Template) || MatchesPropertyValue((page.PageID));
 		}
 
 		private static bool MatchesDocTypeAlias(string docTypeAlias)
@@ -87,6 +88,30 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			var template = new Template(templateId);
 
 			return template.Id != 0 && Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
+		}
+
+		private static bool MatchesPropertyValue(int pageId)
+		{
+			var propertyAliasesSetting = Settings.GetValueFromKey(Settings.AppKey_PropertyAliases);
+
+			if (string.IsNullOrEmpty(propertyAliasesSetting))
+				return false;
+
+			var node = new Node(pageId);
+			var propertyAliases = propertyAliasesSetting.Split(',');
+
+			foreach (var propertyAlias in propertyAliases)
+			{
+				var property = node.GetProperty(propertyAlias);
+				if (property == null)
+					continue;
+
+				var match = property.Value == Settings.CHECKBOX_TRUE;
+				if (match)
+					return true;
+			}
+
+			return false;
 		}
 
 	}
