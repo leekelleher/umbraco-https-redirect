@@ -108,7 +108,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			settings.Add(Settings.AppKey_DocTypes, GetStringFromCheckboxList(this.cblDocTypes));
 			settings.Add(Settings.AppKey_Templates, GetStringFromCheckboxList(this.cblTemplates));
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
-			settings.Add(Settings.AppKey_PropertyAliases, this.txtPropertyAliases.Text.Trim());
+			settings.Add(Settings.AppKey_Properties, this.txtProperties.Text.Trim());
 			settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
 
 			foreach (var setting in settings)

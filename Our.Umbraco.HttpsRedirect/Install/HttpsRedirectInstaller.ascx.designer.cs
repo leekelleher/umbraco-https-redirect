@@ -67,13 +67,13 @@ namespace Our.Umbraco.HttpsRedirect.Install {
         protected global::System.Web.UI.WebControls.TextBox txtPageIds;
         
         /// <summary>
-        /// txtPropertyAliases control.
+        /// txtProperties control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPropertyAliases;
+        protected global::System.Web.UI.WebControls.TextBox txtProperties;
         
         /// <summary>
         /// chkStripPort control.

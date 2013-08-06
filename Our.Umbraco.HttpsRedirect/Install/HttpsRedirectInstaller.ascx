@@ -32,9 +32,9 @@
 
 		<br style="clear: both;" />
 
-		<h2>Property Aliases</h2>
-		<p>Enter a comma-separated list of property aliases of checkbox-based properties:</p>
-		<asp:TextBox runat="server" ID="txtPropertyAliases" CssClass="umbEditorTextField" />
+		<h2>Properties</h2>
+		<p>Enter a comma-separated list of property aliases and values, in the format propertyAlias:value.<br/><em>Ex:  forceSsl:1,anotherPropertyAlias:off</em></p>
+		<asp:TextBox runat="server" ID="txtProperties" CssClass="umbEditorTextField" />
 
 		<br style="clear: both;" />
 
