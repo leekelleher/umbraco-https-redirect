@@ -13,6 +13,10 @@ namespace Our.Umbraco.HttpsRedirect
 {
 	public class Settings
 	{
+		public const string CHECKBOX_TRUE = "1";
+
+		public const char COLON = ':';
+
 		public const char COMMA = ',';
 
 		public const string HTTP = "http://";

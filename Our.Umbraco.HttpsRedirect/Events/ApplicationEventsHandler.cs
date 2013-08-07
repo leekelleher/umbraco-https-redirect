@@ -92,18 +92,25 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static bool MatchesPropertyValue(int pageId)
 		{
-			var propertiesSetting = Settings.GetValueFromKey(Settings.AppKey_Properties);
+			var appSetting = Settings.GetValueFromKey(Settings.AppKey_Properties);
 
-			if (string.IsNullOrEmpty(propertiesSetting))
+			if (string.IsNullOrEmpty(appSetting))
 				return false;
 
 			var node = new Node(pageId);
-			var propertyEntries = propertiesSetting.Split(',');
+			var items = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries);
 
-			foreach (var propertyEntry in propertyEntries)
+			foreach (var item in items)
 			{
-				var propertyAlias = propertyEntry.Split(':')[0];
-				var propertyValue = propertyEntry.Split(':')[1];
+				var parts = item.Split(new[] { Settings.COLON }, StringSplitOptions.RemoveEmptyEntries);
+				if (parts.Length == 0)
+					continue;
+
+				var propertyAlias = parts[0];
+				var propertyValue = Settings.CHECKBOX_TRUE;
+
+				if (parts.Length > 1)
+					propertyValue = parts[1];
 
 				var property = node.GetProperty(propertyAlias);
 				if (property == null)
