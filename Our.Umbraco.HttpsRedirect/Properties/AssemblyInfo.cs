@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Umbrella Inc Ltd")]
 [assembly: AssemblyProduct("Our.Umbraco.HttpsRedirect")]
-[assembly: AssemblyCopyright("Copyright \xa9 Umbrella Inc Ltd 2011-2012")]
+[assembly: AssemblyCopyright("Copyright \xa9 Umbrella Inc Ltd 2011-2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

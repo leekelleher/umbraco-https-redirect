@@ -5,7 +5,7 @@
 		<package>
 			<name>HTTPS Redirect</name>
 			<version>0.0.0</version>
-			<license url="http://www.opensource.org/licenses/mit-license.php">MIT license</license>
+			<license url="http://opensource.org/licenses/MIT">MIT license</license>
 			<url>http://our.umbraco.org/projects/website-utilities/https-redirect</url>
 			<requirements>
 				<major>0</major>

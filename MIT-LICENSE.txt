@@ -1,7 +1,7 @@
-Copyright (c) 2011 Lee Kelleher, Darren Ferguson, Rich Green 
+Copyright (c) 2011 Lee Kelleher, Darren Ferguson, Rich Green, Tom Fulton
 
 This software consists of voluntary contributions made by Lee
-Kelleher, Darren Ferguson and Rich Green 
+Kelleher, Darren Ferguson, Rich Green and Tom Fulton
 (http://our.umbraco.org/people) For exact contribution history,
 see the revision history and logs, available at
 https://bitbucket.org/vertino/https-redirect-for-umbraco/src
