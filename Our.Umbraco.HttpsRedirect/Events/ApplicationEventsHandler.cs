@@ -70,7 +70,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static bool HasMatch(page page)
 		{
-			return MatchesDocTypeAlias(page.NodeTypeAlias) || MatchesNodeId(page.PageID) || MatchesTemplate(page.Template) || MatchesPropertyValue((page.PageID));
+			return MatchesDocTypeAlias(page.NodeTypeAlias)
+				|| MatchesNodeId(page.PageID)
+				|| MatchesTemplate(page.Template)
+				|| MatchesPropertyValue((page.PageID));
 		}
 
 		private static bool MatchesDocTypeAlias(string docTypeAlias)

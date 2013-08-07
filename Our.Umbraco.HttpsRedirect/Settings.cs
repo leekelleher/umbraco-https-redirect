@@ -63,24 +63,22 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public static bool KeyContainsValue(string appKey, object value)
 		{
-			if (!string.IsNullOrWhiteSpace(appKey))
+			if (string.IsNullOrWhiteSpace(appKey))
+				return false;
+
+			var appSetting = GetValueFromKey(appKey);
+			if (string.IsNullOrWhiteSpace(appSetting))
+				return false;
+
+			var values = appSetting.Split(new[] { COMMA }, StringSplitOptions.RemoveEmptyEntries);
+
+			if (value is int)
 			{
-				var appSetting = GetValueFromKey(appKey);
-				if (!string.IsNullOrWhiteSpace(appSetting))
-				{
-					var values = appSetting.Split(new[] { COMMA }, StringSplitOptions.RemoveEmptyEntries);
-
-					if (value is int)
-					{
-						var pageIds = Array.ConvertAll(values, int.Parse);
-						return pageIds.Contains((int)value);
-					}
-
-					return values.Contains(value);
-				}
+				var pageIds = Array.ConvertAll(values, int.Parse);
+				return pageIds.Contains((int)value);
 			}
 
-			return false;
+			return values.Contains(value);
 		}
 	}
 }
