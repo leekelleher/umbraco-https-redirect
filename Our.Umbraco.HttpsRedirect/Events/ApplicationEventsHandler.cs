@@ -24,9 +24,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 			// check if the port should be stripped.
 			if (ShouldStripPort())
-			{
 				url = StripPortFromUrl(url, e.Context.Request.Url);
-			}
 
 			// check for matches
 			if (HasMatch(page))
@@ -58,12 +56,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 		private static bool ShouldStripPort()
 		{
 			bool strip;
-			var stripPortString = Settings.GetValueFromKey(Settings.AppKey_StripPort);
+			var appSetting = Settings.GetValueFromKey(Settings.AppKey_StripPort);
 
-			if (!string.IsNullOrWhiteSpace(stripPortString) && bool.TryParse(stripPortString, out strip))
-			{
+			if (!string.IsNullOrWhiteSpace(appSetting) && bool.TryParse(appSetting, out strip))
 				return strip;
-			}
 
 			return false;
 		}
