@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Web.Configuration;
@@ -39,14 +40,18 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string AppKey_Templates = "HttpsRedirect:Templates";
 
+		public const string AppKey_UsePermanentRedirects = "HttpsRedirect:UsePermanentRedirects";
+
 		public static readonly Dictionary<string, string> AppKeys = new Dictionary<string, string>()
 		{
 			{ AppKey_DocTypes, "Document Types" },
 			{ AppKey_PageIds, "Page Ids" },
 			{ AppKey_Templates, "Templates" },
 			{ AppKey_Properties, "Properties" },
-			{ AppKey_StripPort, "Strip Port" }
+			{ AppKey_StripPort, "Strip Port" },
+			{ AppKey_UsePermanentRedirects, "Permanent Redirects" },
 		};
+
 
 		public static Version Version
 		{
@@ -58,7 +63,29 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public static string GetValueFromKey(string appKey)
 		{
-			return WebConfigurationManager.AppSettings[appKey];
+			return GetValueFromKey<string>(appKey);
+		}
+
+		public static T GetValueFromKey<T>(string appKey)
+		{
+			var appKeyValue = WebConfigurationManager.AppSettings[appKey] ?? string.Empty;
+			var typeConverter = TypeDescriptor.GetConverter(typeof(T));
+
+			if (typeof (T) == typeof (bool))
+			{
+				if (appKeyValue == "1")
+					return (T)(object) true;
+
+				if (appKeyValue == "0")
+					return (T) (object) false;
+
+				bool result = false;
+				bool.TryParse(appKeyValue, out result);
+
+				return (T) (object) result;
+			} 
+
+			return (T) typeConverter.ConvertFrom(appKeyValue);
 		}
 
 		public static bool KeyContainsValue(string appKey, object value)
