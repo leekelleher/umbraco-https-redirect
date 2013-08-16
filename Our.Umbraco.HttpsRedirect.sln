@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Package", "Build Pack
 		_build\BuildPackage.cmd = _build\BuildPackage.cmd
 		_build\BuildPackage.msbuild = _build\BuildPackage.msbuild
 		_build\package.xml = _build\package.xml
+		_build\package.nuspec = _build\package.nuspec
 		_build\readme.txt = _build\readme.txt
 	EndProjectSection
 EndProject
