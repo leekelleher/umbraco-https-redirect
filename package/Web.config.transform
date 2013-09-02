@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="HttpsRedirect:DocTypes" value="" />
+    <add key="HttpsRedirect:Templates" value="" />
+    <add key="HttpsRedirect:PageIds" value="" />
+    <add key="HttpsRedirect:Properties" value="" />
+    <add key="HttpsRedirect:StripPort" value="False" />
+    <add key="HttpsRedirect:UseTemporaryRedirects" value="False" />
+  </appSettings>
+</configuration>

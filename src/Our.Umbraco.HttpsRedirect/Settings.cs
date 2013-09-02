@@ -52,7 +52,6 @@ namespace Our.Umbraco.HttpsRedirect
 			{ AppKey_UseTemporaryRedirects, "Temporary Redirects (302)" },
 		};
 
-
 		public static Version Version
 		{
 			get
@@ -69,23 +68,26 @@ namespace Our.Umbraco.HttpsRedirect
 		public static T GetValueFromKey<T>(string appKey)
 		{
 			var appKeyValue = WebConfigurationManager.AppSettings[appKey] ?? string.Empty;
-			var typeConverter = TypeDescriptor.GetConverter(typeof(T));
 
-			if (typeof (T) == typeof (bool))
+			if (string.IsNullOrEmpty(appKeyValue))
+				return default(T);
+
+			if (typeof(T) == typeof(bool))
 			{
 				if (appKeyValue == "1")
-					return (T)(object) true;
+					return (T)(object)true;
 
 				if (appKeyValue == "0")
-					return (T) (object) false;
+					return (T)(object)false;
 
-				bool result = false;
+				bool result;
 				bool.TryParse(appKeyValue, out result);
 
-				return (T) (object) result;
-			} 
+				return (T)(object)result;
+			}
 
-			return (T) typeConverter.ConvertFrom(appKeyValue);
+			var typeConverter = TypeDescriptor.GetConverter(typeof(T));
+			return (T)typeConverter.ConvertFrom(appKeyValue);
 		}
 
 		public static bool KeyContainsValue(string appKey, object value)

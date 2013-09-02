@@ -5,15 +5,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.HttpsRedirect",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9EFECC13-C583-4DE9-8E30-A477A3DF0E63}"
 	ProjectSection(SolutionItems) = preProject
-		MIT-LICENSE.txt = MIT-LICENSE.txt
+		..\LICENSE.txt = ..\LICENSE.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Package", "Build Package", "{9DDFB5C9-9C62-4F3E-AB75-BAE01CC38869}"
 	ProjectSection(SolutionItems) = preProject
-		_build\BuildPackage.cmd = _build\BuildPackage.cmd
-		_build\BuildPackage.msbuild = _build\BuildPackage.msbuild
-		_build\package.xml = _build\package.xml
-		_build\readme.txt = _build\readme.txt
+		..\build.cmd = ..\build.cmd
+		..\package\package.proj = ..\package\package.proj
+		..\package\package.nuspec = ..\package\package.nuspec
+		..\package\package.xml = ..\package\package.xml
+		..\package\package.txt = ..\package\package.txt
+		..\package\Web.config.transform = ..\package\Web.config.transform
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{29EBFCAE-1B96-4E1F-BC46-482C0CB316DB}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Global
@@ -32,5 +41,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9DDFB5C9-9C62-4F3E-AB75-BAE01CC38869} = {9EFECC13-C583-4DE9-8E30-A477A3DF0E63}
+		{29EBFCAE-1B96-4E1F-BC46-482C0CB316DB} = {9EFECC13-C583-4DE9-8E30-A477A3DF0E63}
 	EndGlobalSection
 EndGlobal
