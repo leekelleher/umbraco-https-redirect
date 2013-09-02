@@ -44,6 +44,11 @@
 
 		<br style="clear: both;" />
 
+		<h2>Use Permanent Redirects</h2>
+		<p>If selected, all redirects will use the Permanent (301) status code, otherwise Temporary (302) will be used.</p>
+		<asp:CheckBox runat="server" ID="chkUsePermanentRedirects" Text="Use Permanent Redirects?" />
+
+		<br style="clear: both;" />
 		<asp:PlaceHolder runat="server" ID="phDashboardControl">
 			<h2>Dashboard control</h2>
 			<p>If you would like to revisit this screen in future, you can add it as a dashboard control to the Developer section.</p>

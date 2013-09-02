@@ -77,12 +77,10 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				}
 
 				// populate strip port
-				bool stripPortVal;
-				var stripPort = Settings.GetValueFromKey(Settings.AppKey_StripPort);
-				if (!string.IsNullOrWhiteSpace(stripPort) && bool.TryParse(stripPort, out stripPortVal))
-				{
-					this.chkStripPort.Checked = stripPortVal;
-				}
+				this.chkStripPort.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
+
+				// populate use permanent redirects
+				this.chkUsePermanentRedirects.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_UsePermanentRedirects);
 			}
 
 			// disable the dashboard control checkbox
@@ -110,6 +108,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
 			settings.Add(Settings.AppKey_Properties, this.txtProperties.Text.Trim());
 			settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
+			settings.Add(Settings.AppKey_UsePermanentRedirects, this.chkUsePermanentRedirects.Checked.ToString());
 
 			foreach (var setting in settings)
 			{

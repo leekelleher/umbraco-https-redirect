@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using umbraco;
 using umbraco.BusinessLogic;
 using umbraco.NodeFactory;
@@ -33,7 +34,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 				if (!e.Context.Request.IsSecureConnection)
 				{
 					// ... then redirect the URL to HTTPS.
-					e.Context.Response.Redirect(url.Replace(Settings.HTTP, Settings.HTTPS), true);
+					PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), e.Context);
 				}
 
 				return;
@@ -43,7 +44,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			if (e.Context.Request.IsSecureConnection)
 			{
 				// ... redirect the URL back to HTTP.
-				e.Context.Response.Redirect(url.Replace(Settings.HTTPS, Settings.HTTP), true);
+				PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), e.Context);
 				return;
 			}
 		}
@@ -55,13 +56,12 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static bool ShouldStripPort()
 		{
-			bool strip;
-			var appSetting = Settings.GetValueFromKey(Settings.AppKey_StripPort);
+			return Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
+		}
 
-			if (!string.IsNullOrWhiteSpace(appSetting) && bool.TryParse(appSetting, out strip))
-				return strip;
-
-			return false;
+		private static bool ShouldRedirectPermanent()
+		{
+			return Settings.GetValueFromKey<bool>(Settings.AppKey_UsePermanentRedirects);
 		}
 
 		private static bool HasMatch(page page)
@@ -121,6 +121,14 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			}
 
 			return false;
+		}
+
+		private static void PerformRedirect(string targetUrl, HttpContext context)
+		{
+			if (ShouldRedirectPermanent())
+				context.Response.RedirectPermanent(targetUrl, true);
+			else
+				context.Response.Redirect(targetUrl, true);
 		}
 
 	}
