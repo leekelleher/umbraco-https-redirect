@@ -2,9 +2,17 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Package">
 
 	<!-- IMPORTS -->
-	<Import Project="$(MSBuildProjectDirectory)\MSBuildTasks\MSBuild.Community.Tasks.Targets" />
-	<Import Project="$(MSBuildProjectDirectory)\MSBuildTasks\MSBuild.Umbraco.Tasks.Targets" />
-	<Import Project="$(MSBuildProjectDirectory)\MSBuildTasks\MSBuild.NuGet.Tasks.Targets" />
+	<PropertyGroup>
+		<RootDir>$(MSBuildProjectDirectory)\..</RootDir>
+		<MSBuildCustomTasksPath>$(RootDir)\tools\MSBuildTasks</MSBuildCustomTasksPath>
+		<MSBuildCommunityTasksPath>$(MSBuildCustomTasksPath)</MSBuildCommunityTasksPath>
+		<MSBuildUmbracoTasksPath>$(MSBuildCustomTasksPath)</MSBuildUmbracoTasksPath>
+		<MSBuildNuGetTasksPath>$(MSBuildCustomTasksPath)</MSBuildNuGetTasksPath>
+	</PropertyGroup>
+
+	<Import Project="$(MSBuildCustomTasksPath)\MSBuild.Community.Tasks.Targets" />
+	<Import Project="$(MSBuildCustomTasksPath)\MSBuild.Umbraco.Tasks.Targets" />
+	<Import Project="$(MSBuildCustomTasksPath)\MSBuild.NuGet.Tasks.Targets" />
 
 	<!-- PROPERTIES -->
 	<PropertyGroup>
