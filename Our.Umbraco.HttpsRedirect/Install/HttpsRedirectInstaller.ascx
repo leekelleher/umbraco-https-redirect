@@ -3,7 +3,7 @@
 
 <div style="padding: 10px 10px 0;">
 
-	<p><img src="<%= Logo %>" alt="HTTPS Redirect" /></p>
+	<p><img src="<%= this.Logo %>" alt="HTTPS Redirect" /></p>
 
 	<asp:PlaceHolder runat="server" ID="phInstaller">
 		
@@ -41,6 +41,12 @@
 		<h2>Strip Port Number</h2>
 		<p>Choose whether the port number portion of the URL should be stripped. Useful if you use non-standard ports internal to your firewall:</p>
 		<asp:CheckBox runat="server" ID="chkStripPort" Text="Strip port numbers?" />
+
+		<br style="clear: both;" />
+
+		<h2>Use Temporary Redirects</h2>
+		<p>If selected, all redirects will use the Temporary (302) status code, otherwise Permanent (301) will be used.</p>
+		<asp:CheckBox runat="server" ID="chkUseTemporaryRedirects" Text="Use Temporary Redirects?" />
 
 		<br style="clear: both;" />
 
