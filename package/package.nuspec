@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>Our.Umbraco.HttpsRedirect</id>
-		<version></version>
+		<version>0.0.0</version>
 		<title>HTTPS Redirect for Umbraco</title>
-		<authors>Lee Kelleher, Darren Ferguson, Rich Green, Tom Fulton</authors>
-		<owners>Lee Kelleher</owners>
+		<authors>Lee Kelleher, Tom Fulton, Darren Ferguson, Rich Green</authors>
+		<owners>Lee Kelleher, Tom Fulton</owners>
 		<projectUrl>http://our.umbraco.org/projects/website-utilities/https-redirect</projectUrl>
 		<summary>HTTPS Redirect is an Umbraco package that provides a simple mechanism to switch a URL from HTTP to HTTPS (SSL) based on the document-type (alias), node id or template alias.</summary>
 		<description>

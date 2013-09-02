@@ -24,10 +24,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<RootDir>$(MSBuildProjectDirectory)\..\Our.Umbraco.HttpsRedirect</RootDir>
 		<BuildDir>$(MSBuildProjectDirectory)\_temp</BuildDir>
 		<BuildUmbracoDir>$(BuildDir)\_umbraco</BuildUmbracoDir>
 		<BuildNugetDir>$(BuildDir)\_nuget</BuildNugetDir>
+		<ProjectDir>$(RootDir)\src\Our.Umbraco.HttpsRedirect</ProjectDir>
 	</PropertyGroup>
 
 	<!-- TARGETS -->
@@ -47,7 +47,7 @@
 			<Output TaskParameter="Revision" PropertyName="Revision" />
 		</Version>
 		<AssemblyInfo CodeLanguage="CS"
-			OutputFile="$(RootDir)\Properties\VersionInfo.cs"
+			OutputFile="$(ProjectDir)\Properties\VersionInfo.cs"
 			AssemblyVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)"
 			AssemblyFileVersion="$(VersionMajor).$(VersionMinor).$(Build).$(Revision)"
 			AssemblyInformationalVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionSuffix)"/>
@@ -55,14 +55,14 @@
 
 	<!-- COMPILE -->
 	<Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
-		<MSBuild Projects="$(RootDir)\..\Our.Umbraco.HttpsRedirect.sln" Properties="Configuration=Release" />
+		<MSBuild Projects="$(RootDir)\src\Our.Umbraco.HttpsRedirect.sln" Properties="Configuration=Release" />
 	</Target>
 
 	<!-- PREPARE FILES -->
 	<Target Name="PrepareFiles" DependsOnTargets="Compile">
 		<ItemGroup>
-			<BinFiles Include="$(RootDir)\bin\Release\Our.Umbraco.HttpsRedirect.dll" />
-			<PluginFiles Include="$(RootDir)\Install\*.ascx" />
+			<BinFiles Include="$(ProjectDir)\bin\Release\Our.Umbraco.HttpsRedirect.dll" />
+			<PluginFiles Include="$(ProjectDir)\Install\*.ascx" />
 			<PackageFile Include="$(MSBuildProjectDirectory)\package.xml" />
 			<NuSpecFile Include="$(MSBuildProjectDirectory)\package.nuspec" />
 			<NugetWebTransformFile Include="$(MSBuildProjectDirectory)\web.config.transform" />
@@ -85,11 +85,11 @@
 		<ItemGroup>
 			<ManifestFiles Include="$(BuildUmbracoDir)\**\*" Exclude="$(BuildUmbracoDir)\package.xml" />
 		</ItemGroup>
-		<ManifestUpdate ManifestFile="$(BuildUmbracoDir)\package.xml"
+		<MSBuild.Umbraco.Tasks.ManifestUpdate ManifestFile="$(BuildUmbracoDir)\package.xml"
 			WorkingDirectory="$(BuildUmbracoDir)"
 			MinimumRequiredUmbracoVersion="$(UmbracoVersion)"
 			PackageVersion="$(VersionMajor).$(VersionMinor).$(VersionPatch)$(VersionSuffix)"
-			Readme="$([System.IO.File]::ReadAllText(readme.txt))"
+			Readme="$([System.IO.File]::ReadAllText(package.txt))"
 			Files="@(ManifestFiles)" />
 	</Target>
 
@@ -108,17 +108,18 @@
 	<!-- PACKAGE -->
 	<Target Name="Package" DependsOnTargets="ManifestNuGet">
 		<ItemGroup>
-			<PackageFiles Include="$(BuildDir)\**\*.*" />
+			<PackageFiles Include="$(BuildUmbracoDir)\**\*.*" />
 		</ItemGroup>
-		<Package ManifestFile="$(BuildUmbracoDir)\package.xml"
-		   WorkingDirectory="$(BuildUmbracoDir)"
-		   OutputDirectory="$(MSBuildProjectDirectory)"
-		   Files="@(PackageFiles)" />
-		<MSBuild.NuGet.Tasks.Pack NuGetExePath="$(MSBuildProjectDirectory)\..\.nuget\NuGet.exe"
+		<MSBuild.Umbraco.Tasks.Package ManifestFile="$(BuildUmbracoDir)\package.xml"
+			WorkingDirectory="$(BuildUmbracoDir)"
+			OutputDirectory="$(RootDir)"
+			Files="@(PackageFiles)" />
+		<MSBuild.NuGet.Tasks.Pack NuGetExePath="$(RootDir)\src\.nuget\NuGet.exe"
 			ManifestFile="$(BuildNuGetDir)\package.nuspec"
 			BasePath="$(BuildNuGetDir)"
-			OutputDirectory="$(MSBuildProjectDirectory)"
+			OutputDirectory="$(RootDir)"
 			Verbosity="normal" />
+
 		<RemoveDir Directories="$(BuildUmbracoDir)" Condition="Exists('$(BuildUmbracoDir)')" />
 		<RemoveDir Directories="$(BuildNuGetDir)" Condition="Exists('$(BuildNuGetDir)')" />
 		<RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />

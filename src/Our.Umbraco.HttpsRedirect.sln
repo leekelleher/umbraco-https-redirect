@@ -12,10 +12,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Package", "Build Package", "{9DDFB5C9-9C62-4F3E-AB75-BAE01CC38869}"
 	ProjectSection(SolutionItems) = preProject
 		..\build.cmd = ..\build.cmd
-		..\package\BuildPackage.msbuild = ..\package\BuildPackage.msbuild
+		..\package\package.proj = ..\package\package.proj
 		..\package\package.nuspec = ..\package\package.nuspec
 		..\package\package.xml = ..\package\package.xml
-		..\package\readme.txt = ..\package\readme.txt
+		..\package\package.txt = ..\package\package.txt
 		..\package\Web.config.transform = ..\package\Web.config.transform
 	EndProjectSection
 EndProject
