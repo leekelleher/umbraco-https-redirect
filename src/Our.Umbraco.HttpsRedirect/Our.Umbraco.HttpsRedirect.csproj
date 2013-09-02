@@ -32,19 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="businesslogic">
-      <HintPath>..\_externals\businesslogic.dll</HintPath>
+      <HintPath>..\..\lib\businesslogic.dll</HintPath>
     </Reference>
     <Reference Include="ClientDependency.Core">
-      <HintPath>..\_externals\ClientDependency.Core.dll</HintPath>
+      <HintPath>..\..\lib\ClientDependency.Core.dll</HintPath>
     </Reference>
     <Reference Include="cms">
-      <HintPath>..\_externals\cms.dll</HintPath>
+      <HintPath>..\..\lib\cms.dll</HintPath>
     </Reference>
     <Reference Include="controls">
-      <HintPath>..\_externals\controls.dll</HintPath>
+      <HintPath>..\..\lib\controls.dll</HintPath>
     </Reference>
     <Reference Include="interfaces">
-      <HintPath>..\_externals\interfaces.dll</HintPath>
+      <HintPath>..\..\lib\interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -53,7 +53,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.XML" />
     <Reference Include="umbraco">
-      <HintPath>..\_externals\umbraco.dll</HintPath>
+      <HintPath>..\..\lib\umbraco.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
