@@ -61,7 +61,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static bool ShouldRedirectPermanent()
 		{
-			return Settings.GetValueFromKey<bool>(Settings.AppKey_UsePermanentRedirects);
+			return Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
 		}
 
 		private static bool HasMatch(page page)

@@ -85,13 +85,13 @@ namespace Our.Umbraco.HttpsRedirect.Install {
         protected global::System.Web.UI.WebControls.CheckBox chkStripPort;
         
         /// <summary>
-        /// chkUsePermanentRedirects control.
+        /// chkUseTemporaryRedirects control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkUsePermanentRedirects;
+        protected global::System.Web.UI.WebControls.CheckBox chkUseTemporaryRedirects;
         
         /// <summary>
         /// phDashboardControl control.

@@ -40,7 +40,7 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string AppKey_Templates = "HttpsRedirect:Templates";
 
-		public const string AppKey_UsePermanentRedirects = "HttpsRedirect:UsePermanentRedirects";
+		public const string AppKey_UseTemporaryRedirects = "HttpsRedirect:UseTemporaryRedirects";
 
 		public static readonly Dictionary<string, string> AppKeys = new Dictionary<string, string>()
 		{
@@ -49,7 +49,7 @@ namespace Our.Umbraco.HttpsRedirect
 			{ AppKey_Templates, "Templates" },
 			{ AppKey_Properties, "Properties" },
 			{ AppKey_StripPort, "Strip Port" },
-			{ AppKey_UsePermanentRedirects, "Permanent Redirects" },
+			{ AppKey_UseTemporaryRedirects, "Temporary Redirects (302)" },
 		};
 
 

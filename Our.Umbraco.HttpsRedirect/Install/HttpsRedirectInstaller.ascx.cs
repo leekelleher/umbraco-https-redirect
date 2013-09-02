@@ -16,7 +16,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 {
 	public partial class HttpsRedirectInstaller : UserControl
 	{
-		protected string Logo
+		public string Logo
 		{
 			get
 			{
@@ -80,7 +80,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				this.chkStripPort.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
 
 				// populate use permanent redirects
-				this.chkUsePermanentRedirects.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_UsePermanentRedirects);
+				this.chkUseTemporaryRedirects.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
 			}
 
 			// disable the dashboard control checkbox
@@ -108,7 +108,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
 			settings.Add(Settings.AppKey_Properties, this.txtProperties.Text.Trim());
 			settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
-			settings.Add(Settings.AppKey_UsePermanentRedirects, this.chkUsePermanentRedirects.Checked.ToString());
+			settings.Add(Settings.AppKey_UseTemporaryRedirects, this.chkUseTemporaryRedirects.Checked.ToString());
 
 			foreach (var setting in settings)
 			{

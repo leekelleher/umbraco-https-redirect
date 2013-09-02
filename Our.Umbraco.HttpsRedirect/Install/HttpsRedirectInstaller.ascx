@@ -3,7 +3,7 @@
 
 <div style="padding: 10px 10px 0;">
 
-	<p><img src="<%= Logo %>" alt="HTTPS Redirect" /></p>
+	<p><img src="<%= this.Logo %>" alt="HTTPS Redirect" /></p>
 
 	<asp:PlaceHolder runat="server" ID="phInstaller">
 		
@@ -44,11 +44,12 @@
 
 		<br style="clear: both;" />
 
-		<h2>Use Permanent Redirects</h2>
-		<p>If selected, all redirects will use the Permanent (301) status code, otherwise Temporary (302) will be used.</p>
-		<asp:CheckBox runat="server" ID="chkUsePermanentRedirects" Text="Use Permanent Redirects?" />
+		<h2>Use Temporary Redirects</h2>
+		<p>If selected, all redirects will use the Temporary (302) status code, otherwise Permanent (301) will be used.</p>
+		<asp:CheckBox runat="server" ID="chkUseTemporaryRedirects" Text="Use Temporary Redirects?" />
 
 		<br style="clear: both;" />
+
 		<asp:PlaceHolder runat="server" ID="phDashboardControl">
 			<h2>Dashboard control</h2>
 			<p>If you would like to revisit this screen in future, you can add it as a dashboard control to the Developer section.</p>
