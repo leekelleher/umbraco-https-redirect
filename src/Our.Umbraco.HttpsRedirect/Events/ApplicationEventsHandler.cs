@@ -59,7 +59,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			return Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
 		}
 
-		private static bool ShouldRedirectPermanent()
+		private static bool ShouldRedirectTemporary()
 		{
 			return Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
 		}
@@ -125,10 +125,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
 		private static void PerformRedirect(string targetUrl, HttpContext context)
 		{
-			if (ShouldRedirectPermanent())
-				context.Response.RedirectPermanent(targetUrl, true);
-			else
+			if (ShouldRedirectTemporary())
 				context.Response.Redirect(targetUrl, true);
+			else
+				context.Response.RedirectPermanent(targetUrl, true);
 		}
 
 	}
