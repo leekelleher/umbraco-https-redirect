@@ -4,132 +4,134 @@ using umbraco;
 using umbraco.BusinessLogic;
 using umbraco.NodeFactory;
 using umbraco.cms.businesslogic.template;
+using Umbraco.Core;
+using Umbraco.Web.Routing;
+using Umbraco.Core.Models;
 
 namespace Our.Umbraco.HttpsRedirect.Events
 {
-	public class EventsHandler : ApplicationBase
-	{
-		public EventsHandler()
-		{
-			UmbracoDefault.AfterRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefaultAfterRequestInit);
-		}
+    public class EventsHandler : ApplicationEventHandler
+    {
+        public EventsHandler()
+        {
+            PublishedContentRequest.Prepared += PublishedContentRequest_Prepared;
+        }
 
-		private void UmbracoDefaultAfterRequestInit(object sender, RequestInitEventArgs e)
-		{
-			var url = e.Context.Request.Url.ToString(); // .ToLower(); also lowercases query string which caused us issues (DF)
+        private void PublishedContentRequest_Prepared(object sender, EventArgs e)
+        {
+            PublishedContentRequest request = sender as PublishedContentRequest;
+            HttpContext currentContext = HttpContext.Current;
+            string url = request.Uri.ToString();
+            IPublishedContent page = request.PublishedContent;
 
-			var page = e.Page;
+            if (page == null)
+                return;
 
-			if (page == null)
-				return;
+            // check if the port should be stripped.
+            if (ShouldStripPort())
+                url = StripPortFromUrl(url, currentContext.Request.Url);
 
-			// check if the port should be stripped.
-			if (ShouldStripPort())
-				url = StripPortFromUrl(url, e.Context.Request.Url);
+            // check for matches
+            if (HasMatch(page, request))
+            {
+                // if the doc-type matches and is NOT on HTTPS...
+                if (!currentContext.Request.IsSecureConnection)
+                {
+                    // ... then redirect the URL to HTTPS.
+                    PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), currentContext);
+                }
 
-			// check for matches
-			if (HasMatch(page))
-			{
-				// if the doc-type matches and is NOT on HTTPS...
-				if (!e.Context.Request.IsSecureConnection)
-				{
-					// ... then redirect the URL to HTTPS.
-					PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), e.Context);
-				}
+                return;
+            }
 
-				return;
-			}
+            // otherwise if the URL is on HTTPS...
+            if (currentContext.Request.IsSecureConnection)
+            {
+                // ... redirect the URL back to HTTP.
+                PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), currentContext);
+                return;
+            }
+        }
 
-			// otherwise if the URL is on HTTPS...
-			if (e.Context.Request.IsSecureConnection)
-			{
-				// ... redirect the URL back to HTTP.
-				PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), e.Context);
-				return;
-			}
-		}
+        private static string StripPortFromUrl(string url, Uri contextUri)
+        {
+            return url.Replace(string.Format(":{0}", contextUri.Port), string.Empty);
+        }
 
-		private static string StripPortFromUrl(string url, Uri contextUri)
-		{
-			return url.Replace(string.Format(":{0}", contextUri.Port), string.Empty);
-		}
+        private static bool ShouldStripPort()
+        {
+            return Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
+        }
 
-		private static bool ShouldStripPort()
-		{
-			return Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
-		}
+        private static bool ShouldRedirectTemporary()
+        {
+            return Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
+        }
 
-		private static bool ShouldRedirectTemporary()
-		{
-			return Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
-		}
+        private static bool HasMatch(IPublishedContent page, PublishedContentRequest request)
+        {
+            return MatchesDocTypeAlias(page.DocumentTypeAlias)
+                || MatchesNodeId(page.Id)
+                || MatchesTemplate(request.TemplateAlias)
+                || MatchesPropertyValue((page.Id));
+        }
 
-		private static bool HasMatch(page page)
-		{
-			return MatchesDocTypeAlias(page.NodeTypeAlias)
-				|| MatchesNodeId(page.PageID)
-				|| MatchesTemplate(page.Template)
-				|| MatchesPropertyValue((page.PageID));
-		}
+        private static bool MatchesDocTypeAlias(string docTypeAlias)
+        {
+            return Settings.KeyContainsValue(Settings.AppKey_DocTypes, docTypeAlias);
+        }
 
-		private static bool MatchesDocTypeAlias(string docTypeAlias)
-		{
-			return Settings.KeyContainsValue(Settings.AppKey_DocTypes, docTypeAlias);
-		}
+        private static bool MatchesNodeId(int pageId)
+        {
+            return Settings.KeyContainsValue(Settings.AppKey_PageIds, pageId);
+        }
 
-		private static bool MatchesNodeId(int pageId)
-		{
-			return Settings.KeyContainsValue(Settings.AppKey_PageIds, pageId);
-		}
+        private static bool MatchesTemplate(string templateAlias)
+        {
+            return Settings.KeyContainsValue(Settings.AppKey_Templates, templateAlias);
+        }
 
-		private static bool MatchesTemplate(int templateId)
-		{
-			var template = new Template(templateId);
+        private static bool MatchesPropertyValue(int pageId)
+        {
+            var appSetting = Settings.GetValueFromKey(Settings.AppKey_Properties);
 
-			return template.Id != 0 && Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
-		}
+            if (string.IsNullOrEmpty(appSetting))
+                return false;
 
-		private static bool MatchesPropertyValue(int pageId)
-		{
-			var appSetting = Settings.GetValueFromKey(Settings.AppKey_Properties);
+            var node = new Node(pageId);
+            var items = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries);
 
-			if (string.IsNullOrEmpty(appSetting))
-				return false;
+            foreach (var item in items)
+            {
+                var parts = item.Split(new[] { Settings.COLON }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length == 0)
+                    continue;
 
-			var node = new Node(pageId);
-			var items = appSetting.Split(new[] { Settings.COMMA }, StringSplitOptions.RemoveEmptyEntries);
+                var propertyAlias = parts[0];
+                var propertyValue = Settings.CHECKBOX_TRUE;
 
-			foreach (var item in items)
-			{
-				var parts = item.Split(new[] { Settings.COLON }, StringSplitOptions.RemoveEmptyEntries);
-				if (parts.Length == 0)
-					continue;
+                if (parts.Length > 1)
+                    propertyValue = parts[1];
 
-				var propertyAlias = parts[0];
-				var propertyValue = Settings.CHECKBOX_TRUE;
+                var property = node.GetProperty(propertyAlias);
+                if (property == null)
+                    continue;
 
-				if (parts.Length > 1)
-					propertyValue = parts[1];
+                var match = string.Equals(property.Value, propertyValue, StringComparison.InvariantCultureIgnoreCase);
+                if (match)
+                    return true;
+            }
 
-				var property = node.GetProperty(propertyAlias);
-				if (property == null)
-					continue;
+            return false;
+        }
 
-				var match = string.Equals(property.Value, propertyValue, StringComparison.InvariantCultureIgnoreCase);
-				if (match)
-					return true;
-			}
+        private static void PerformRedirect(string targetUrl, HttpContext context)
+        {
+            if (ShouldRedirectTemporary())
+                context.Response.Redirect(targetUrl, true);
+            else
+                context.Response.RedirectPermanent(targetUrl, true);
+        }
 
-			return false;
-		}
-
-		private static void PerformRedirect(string targetUrl, HttpContext context)
-		{
-			if (ShouldRedirectTemporary())
-				context.Response.Redirect(targetUrl, true);
-			else
-				context.Response.RedirectPermanent(targetUrl, true);
-		}
-
-	}
+    }
 }
