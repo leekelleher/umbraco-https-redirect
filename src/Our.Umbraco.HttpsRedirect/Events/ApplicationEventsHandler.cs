@@ -4,47 +4,51 @@ using umbraco;
 using umbraco.BusinessLogic;
 using umbraco.NodeFactory;
 using umbraco.cms.businesslogic.template;
+using Umbraco.Core;
+using Umbraco.Web.Routing;
+using Umbraco.Core.Models;
 
 namespace Our.Umbraco.HttpsRedirect.Events
 {
-	public class EventsHandler : ApplicationBase
+    public class EventsHandler : ApplicationEventHandler
 	{
 		public EventsHandler()
 		{
-			UmbracoDefault.AfterRequestInit += new UmbracoDefault.RequestInitEventHandler(this.UmbracoDefaultAfterRequestInit);
+            PublishedContentRequest.Prepared += PublishedContentRequest_Prepared;
 		}
 
-		private void UmbracoDefaultAfterRequestInit(object sender, RequestInitEventArgs e)
+        private void PublishedContentRequest_Prepared(object sender, EventArgs e)
 		{
-			var url = e.Context.Request.Url.ToString(); // .ToLower(); also lowercases query string which caused us issues (DF)
-
-			var page = e.Page;
+            PublishedContentRequest request = sender as PublishedContentRequest;
+            HttpContext currentContext = HttpContext.Current;
+            string url = request.Uri.ToString();
+            IPublishedContent page = request.PublishedContent;
 
 			if (page == null)
 				return;
 
 			// check if the port should be stripped.
 			if (ShouldStripPort())
-				url = StripPortFromUrl(url, e.Context.Request.Url);
+                url = StripPortFromUrl(url, currentContext.Request.Url);
 
 			// check for matches
-			if (HasMatch(page))
+			if (HasMatch(page, request))
 			{
 				// if the doc-type matches and is NOT on HTTPS...
-				if (!e.Context.Request.IsSecureConnection)
+                if (!currentContext.Request.IsSecureConnection)
 				{
 					// ... then redirect the URL to HTTPS.
-					PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), e.Context);
+                    PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), currentContext);
 				}
 
 				return;
 			}
 
 			// otherwise if the URL is on HTTPS...
-			if (e.Context.Request.IsSecureConnection)
+            if (currentContext.Request.IsSecureConnection)
 			{
 				// ... redirect the URL back to HTTP.
-				PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), e.Context);
+                PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), currentContext);
 				return;
 			}
 		}
@@ -64,12 +68,12 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			return Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
 		}
 
-		private static bool HasMatch(page page)
+        private static bool HasMatch(IPublishedContent page, PublishedContentRequest request)
 		{
-			return MatchesDocTypeAlias(page.NodeTypeAlias)
-				|| MatchesNodeId(page.PageID)
-				|| MatchesTemplate(page.Template)
-				|| MatchesPropertyValue((page.PageID));
+			return MatchesDocTypeAlias(page.DocumentTypeAlias)
+				|| MatchesNodeId(page.Id)
+                || MatchesTemplate(request.TemplateAlias)
+				|| MatchesPropertyValue((page.Id));
 		}
 
 		private static bool MatchesDocTypeAlias(string docTypeAlias)
@@ -82,12 +86,10 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			return Settings.KeyContainsValue(Settings.AppKey_PageIds, pageId);
 		}
 
-		private static bool MatchesTemplate(int templateId)
-		{
-			var template = new Template(templateId);
-
-			return template.Id != 0 && Settings.KeyContainsValue(Settings.AppKey_Templates, template.Alias);
-		}
+        private static bool MatchesTemplate(string templateAlias)
+        {
+            return Settings.KeyContainsValue(Settings.AppKey_Templates, templateAlias);
+        }
 
 		private static bool MatchesPropertyValue(int pageId)
 		{
