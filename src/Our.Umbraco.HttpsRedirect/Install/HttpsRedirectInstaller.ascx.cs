@@ -76,6 +76,13 @@ namespace Our.Umbraco.HttpsRedirect.Install
 					this.txtPageIds.Text = pageIds;
 				}
 
+				// populate the docType Properties
+                var properties = Settings.GetValueFromKey(Settings.AppKey_Properties);
+                if (!string.IsNullOrWhiteSpace(properties))
+                {
+                    this.txtProperties.Text = properties;
+                }
+
 				// populate strip port
 				this.chkStripPort.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_StripPort);
 
