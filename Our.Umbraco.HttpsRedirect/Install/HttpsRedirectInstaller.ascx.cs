@@ -83,6 +83,14 @@ namespace Our.Umbraco.HttpsRedirect.Install
 				{
 					this.chkStripPort.Checked = stripPortVal;
 				}
+
+                // populate strip port
+                bool xForwardedVal;
+                var xForwarded = Settings.GetValueFromKey(Settings.AppKey_XForwardedProto);
+                if (!string.IsNullOrWhiteSpace(xForwarded) && bool.TryParse(xForwarded, out xForwardedVal))
+                {
+                    this.chkXForwardedProto.Checked = xForwardedVal;
+                }
 			}
 
 			// disable the dashboard control checkbox
@@ -109,6 +117,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
 			settings.Add(Settings.AppKey_Templates, GetStringFromCheckboxList(this.cblTemplates));
 			settings.Add(Settings.AppKey_PageIds, this.txtPageIds.Text.Trim());
 			settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
+            settings.Add(Settings.AppKey_XForwardedProto, this.chkXForwardedProto.Checked.ToString());
 
 			foreach (var setting in settings)
 			{

@@ -15,6 +15,15 @@ namespace Our.Umbraco.HttpsRedirect.Events
 		private void UmbracoDefaultAfterRequestInit(object sender, RequestInitEventArgs e)
 		{
 			var url = e.Context.Request.Url.ToString(); // .ToLower(); also lowercases query string which caused us issues (DF)
+            bool isSecure = e.Context.Request.IsSecureConnection;
+
+            // For load balanced environment with SSL termination. The X-Forwarded-Proto header
+            // indicates what protocol was used with the original request.
+            if (ShouldCheckForXForwardedProto())
+            {
+                if (e.Context.Request.Headers["X-Forwarded-Proto"] == "https")
+                    isSecure = true;
+            }
 
 			var page = e.Page;
 
@@ -31,7 +40,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			if (HasMatch(page))
 			{
 				// if the doc-type matches and is NOT on HTTPS...
-				if (!e.Context.Request.IsSecureConnection)
+				if (!isSecure)
 				{
 					// ... then redirect the URL to HTTPS.
 					e.Context.Response.Redirect(url.Replace(Settings.HTTP, Settings.HTTPS), true);
@@ -41,13 +50,26 @@ namespace Our.Umbraco.HttpsRedirect.Events
 			}
 
 			// otherwise if the URL is on HTTPS...
-			if (e.Context.Request.IsSecureConnection)
+			if (isSecure)
 			{
 				// ... redirect the URL back to HTTP.
 				e.Context.Response.Redirect(url.Replace(Settings.HTTPS, Settings.HTTP), true);
 				return;
 			}
 		}
+
+        private static bool ShouldCheckForXForwardedProto()
+        {
+            bool check;
+            var xForwardedProto = Settings.GetValueFromKey(Settings.AppKey_XForwardedProto);
+
+            if (!string.IsNullOrWhiteSpace(xForwardedProto) && bool.TryParse(xForwardedProto, out check))
+            {
+                return check;
+            }
+
+            return false;
+        }
 
 		private static string StripPortFromUrl(string url, Uri contextUri)
 		{

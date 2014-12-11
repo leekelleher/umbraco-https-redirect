@@ -33,12 +33,15 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string AppKey_Templates = "HttpsRedirect:Templates";
 
+        public const string AppKey_XForwardedProto = "HttpsRedirect:XForwardedProto";
+
 		public static readonly Dictionary<string, string> AppKeys = new Dictionary<string, string>()
 		{
 			{ AppKey_DocTypes, "Document Types" },
 			{ AppKey_PageIds, "Page Ids" },
 			{ AppKey_Templates, "Templates" },
-			{ AppKey_StripPort, "Strip Port" }
+			{ AppKey_StripPort, "Strip Port" },
+            { AppKey_XForwardedProto, "X-Forwarded-Proto" }
 		};
 
 		public static Version Version
