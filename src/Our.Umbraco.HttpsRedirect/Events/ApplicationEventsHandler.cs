@@ -12,11 +12,22 @@ namespace Our.Umbraco.HttpsRedirect.Events
 {
     public class EventsHandler : ApplicationEventHandler
     {
-        public EventsHandler()
+
+        /// <summary>
+        /// Register event handler on start.
+        /// </summary>
+        /// <param name="httpApplicationBase">Umbraco application.</param>
+        /// <param name="applicationContext">Application context.</param>
+        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             PublishedContentRequest.Prepared += PublishedContentRequest_Prepared;
         }
 
+        /// <summary>
+        /// Event handler to redirect to HTTPS as necessary.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event args</param>
         private void PublishedContentRequest_Prepared(object sender, EventArgs e)
         {
             PublishedContentRequest request = sender as PublishedContentRequest;
