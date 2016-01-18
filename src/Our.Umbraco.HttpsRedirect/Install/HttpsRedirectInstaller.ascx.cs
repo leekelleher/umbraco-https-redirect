@@ -88,6 +88,14 @@ namespace Our.Umbraco.HttpsRedirect.Install
 
                 // populate use permanent redirects
                 this.chkUseTemporaryRedirects.Checked = Settings.GetValueFromKey<bool>(Settings.AppKey_UseTemporaryRedirects);
+
+                // populate X-Forwarded-Proto
+                bool xForwardedVal;
+                var xForwarded = Settings.GetValueFromKey(Settings.AppKey_XForwardedProto);
+                if (!string.IsNullOrWhiteSpace(xForwarded) && bool.TryParse(xForwarded, out xForwardedVal))
+                {
+                    this.chkXForwardedProto.Checked = xForwardedVal;
+                }
             }
 
             // disable the dashboard control checkbox
@@ -116,6 +124,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
             settings.Add(Settings.AppKey_Properties, this.txtProperties.Text.Trim());
             settings.Add(Settings.AppKey_StripPort, this.chkStripPort.Checked.ToString());
             settings.Add(Settings.AppKey_UseTemporaryRedirects, this.chkUseTemporaryRedirects.Checked.ToString());
+            settings.Add(Settings.AppKey_XForwardedProto, this.chkXForwardedProto.Checked.ToString());
 
             foreach (var setting in settings)
             {

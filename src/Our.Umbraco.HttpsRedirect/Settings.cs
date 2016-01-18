@@ -42,6 +42,8 @@ namespace Our.Umbraco.HttpsRedirect
 
 		public const string AppKey_UseTemporaryRedirects = "HttpsRedirect:UseTemporaryRedirects";
 
+		public const string AppKey_XForwardedProto = "HttpsRedirect:XForwardedProto";
+
 		public static readonly Dictionary<string, string> AppKeys = new Dictionary<string, string>()
 		{
 			{ AppKey_DocTypes, "Document Types" },
@@ -50,6 +52,7 @@ namespace Our.Umbraco.HttpsRedirect
 			{ AppKey_Properties, "Properties" },
 			{ AppKey_StripPort, "Strip Port" },
 			{ AppKey_UseTemporaryRedirects, "Temporary Redirects (302)" },
+			{ AppKey_XForwardedProto, "X-Forwarded-Proto" },
 		};
 
 		public static Version Version

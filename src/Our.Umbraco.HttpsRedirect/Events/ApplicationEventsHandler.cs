@@ -22,10 +22,19 @@ namespace Our.Umbraco.HttpsRedirect.Events
             PublishedContentRequest request = sender as PublishedContentRequest;
             HttpContext currentContext = HttpContext.Current;
             string url = request.Uri.ToString();
+            bool isSecure = currentContext.Request.IsSecureConnection;
             IPublishedContent page = request.PublishedContent;
 
             if (page == null)
                 return;
+
+            // For load balanced environment with SSL termination. The X-Forwarded-Proto header
+            // indicates what protocol was used with the original request.
+            if (ShouldCheckForXForwardedProto())
+            {
+                if (currentContext.Request.Headers["X-Forwarded-Proto"] == "https")
+                    isSecure = true;
+            }
 
             // check if the port should be stripped.
             if (ShouldStripPort())
@@ -35,7 +44,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
             if (HasMatch(page, request))
             {
                 // if the doc-type matches and is NOT on HTTPS...
-                if (!currentContext.Request.IsSecureConnection)
+                if (!isSecure)
                 {
                     // ... then redirect the URL to HTTPS.
                     PerformRedirect(url.Replace(Settings.HTTP, Settings.HTTPS), currentContext);
@@ -45,12 +54,25 @@ namespace Our.Umbraco.HttpsRedirect.Events
             }
 
             // otherwise if the URL is on HTTPS...
-            if (currentContext.Request.IsSecureConnection)
+            if (isSecure)
             {
                 // ... redirect the URL back to HTTP.
                 PerformRedirect(url.Replace(Settings.HTTPS, Settings.HTTP), currentContext);
                 return;
             }
+        }
+
+        private static bool ShouldCheckForXForwardedProto()
+        {
+            bool check;
+            var xForwardedProto = Settings.GetValueFromKey(Settings.AppKey_XForwardedProto);
+
+            if (!string.IsNullOrWhiteSpace(xForwardedProto) && bool.TryParse(xForwardedProto, out check))
+            {
+                return check;
+            }
+
+            return false;
         }
 
         private static string StripPortFromUrl(string url, Uri contextUri)

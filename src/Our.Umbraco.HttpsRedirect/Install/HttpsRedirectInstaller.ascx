@@ -50,6 +50,12 @@
 
 		<br style="clear: both;" />
 
+		<h2>Load Balancer with SSL Termination</h2>
+		<p>Select if you are using a load balancer with SSL termination that adds the X-Forwarded-Proto header.</p>
+		<asp:CheckBox runat="server" ID="chkXForwardedProto" Text="Check for X-Forwarded-Proto Header" />
+ 
+		<br style="clear: both;" />
+
 		<asp:PlaceHolder runat="server" ID="phDashboardControl">
 			<h2>Dashboard control</h2>
 			<p>If you would like to revisit this screen in future, you can add it as a dashboard control to the Developer section.</p>
