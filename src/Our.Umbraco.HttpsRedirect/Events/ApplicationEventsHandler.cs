@@ -12,7 +12,7 @@ namespace Our.Umbraco.HttpsRedirect.Events
 {
     public class EventsHandler : ApplicationEventHandler
     {
-        public EventsHandler()
+        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
             PublishedContentRequest.Prepared += PublishedContentRequest_Prepared;
         }
