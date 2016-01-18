@@ -1,12 +1,9 @@
 using System;
 using System.Web;
-using umbraco;
-using umbraco.BusinessLogic;
 using umbraco.NodeFactory;
-using umbraco.cms.businesslogic.template;
 using Umbraco.Core;
-using Umbraco.Web.Routing;
 using Umbraco.Core.Models;
+using Umbraco.Web.Routing;
 
 namespace Our.Umbraco.HttpsRedirect.Events
 {
@@ -19,11 +16,11 @@ namespace Our.Umbraco.HttpsRedirect.Events
 
         private void PublishedContentRequest_Prepared(object sender, EventArgs e)
         {
-            PublishedContentRequest request = sender as PublishedContentRequest;
-            HttpContext currentContext = HttpContext.Current;
-            string url = request.Uri.ToString();
-            bool isSecure = currentContext.Request.IsSecureConnection;
-            IPublishedContent page = request.PublishedContent;
+            var request = sender as PublishedContentRequest;
+            var currentContext = HttpContext.Current;
+            var url = request.Uri.ToString();
+            var isSecure = currentContext.Request.IsSecureConnection;
+            var page = request.PublishedContent;
 
             if (page == null)
                 return;

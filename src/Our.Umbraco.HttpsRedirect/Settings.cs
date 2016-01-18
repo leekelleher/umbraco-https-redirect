@@ -12,7 +12,7 @@ using Our.Umbraco.HttpsRedirect;
 
 namespace Our.Umbraco.HttpsRedirect
 {
-	public class Settings
+    public class Settings
 	{
 		public const string CHECKBOX_TRUE = "1";
 
