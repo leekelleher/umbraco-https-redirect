@@ -1,0 +1,8 @@
+syntax: glob
+
+*.csproj.user
+*.suo
+*/bin/*
+*/obj/*
+*.Cache
+*/.vsa.backup/*
