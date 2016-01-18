@@ -1,8 +1,13 @@
-syntax: glob
-
-*.csproj.user
+_ReSharper.*
+[Bb]in/
+[Oo]bj/
 *.suo
-*/bin/*
-*/obj/*
-*.Cache
-*/.vsa.backup/*
+*.user
+*.userprefs
+*.cache
+*.orig
+Thumbs.db
+.DS_Store
+*.log
+
+src/packages/*/**
