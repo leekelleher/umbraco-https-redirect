@@ -16,11 +16,11 @@
 
 	<!-- PROPERTIES -->
 	<PropertyGroup>
-		<VersionMajor>2</VersionMajor>
-		<VersionMinor>0</VersionMinor>
+		<VersionMajor>1</VersionMajor>
+		<VersionMinor>3</VersionMinor>
 		<VersionPatch>0</VersionPatch>
-		<VersionSuffix>-build</VersionSuffix>
-		<UmbracoVersion>4.7.0</UmbracoVersion>
+		<VersionSuffix></VersionSuffix>
+		<UmbracoVersion>6.1.6</UmbracoVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
