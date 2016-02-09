@@ -18,7 +18,7 @@ This package will add the following appSetting keys to your Web.config file...
 
 ### Installation
 
-> *Note:* HTTPS Redirect has been developed against **Umbraco v6.1.6** and will support that version and above.
+> *Note:* HTTPS Redirect has been developed against **Umbraco v6.1.2** and will support that version and above.
 
 HTTPS Redirect can be installed from either Our Umbraco or build manually from the source-code:
 

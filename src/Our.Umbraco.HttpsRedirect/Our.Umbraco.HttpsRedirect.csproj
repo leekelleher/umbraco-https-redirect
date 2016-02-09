@@ -31,38 +31,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="businesslogic">
-      <HintPath>..\..\lib\businesslogic.dll</HintPath>
+    <Reference Include="businesslogic, Version=1.0.4927.23555, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\businesslogic.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ClientDependency.Core">
-      <HintPath>..\..\lib\ClientDependency.Core.dll</HintPath>
+    <Reference Include="cms, Version=1.0.4927.23555, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\cms.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="cms">
-      <HintPath>..\..\lib\cms.dll</HintPath>
+    <Reference Include="controls, Version=1.0.4927.23556, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\controls.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="controls">
-      <HintPath>..\..\lib\controls.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="interfaces">
-      <HintPath>..\..\lib\interfaces.dll</HintPath>
+    <Reference Include="interfaces, Version=1.0.4927.23553, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\interfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.XML" />
-    <Reference Include="umbraco">
-      <HintPath>..\..\lib\umbraco.dll</HintPath>
+    <Reference Include="umbraco, Version=1.0.4927.23557, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\umbraco.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Umbraco.Core">
-      <HintPath>..\..\lib\Umbraco.Core.dll</HintPath>
+    <Reference Include="Umbraco.Core, Version=1.0.4927.23554, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.6.1.2\lib\Umbraco.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -87,6 +83,10 @@
     </Content>
     <EmbeddedResource Include="Resources\Images\icon.png" />
     <EmbeddedResource Include="Resources\Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
