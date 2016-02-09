@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Configuration;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
-using umbraco;
 using umbraco.cms.businesslogic.packager;
-using umbraco.cms.businesslogic.template;
-using umbraco.cms.businesslogic.web;
-using umbraco.IO;
 using umbraco.uicontrols;
+using Umbraco.Core;
+using Umbraco.Core.IO;
+using Umbraco.Web.UI.Controls;
 
 namespace Our.Umbraco.HttpsRedirect.Install
 {
-    public partial class HttpsRedirectInstaller : UserControl
+    public partial class HttpsRedirectInstaller : UmbracoUserControl
     {
         public string Logo
         {
@@ -27,14 +24,14 @@ namespace Our.Umbraco.HttpsRedirect.Install
         protected void Page_Init(object sender, EventArgs e)
         {
             // bind the doc-types
-            this.cblDocTypes.DataSource = DocumentType.GetAllAsList();
-            this.cblDocTypes.DataTextField = "Text";
+            this.cblDocTypes.DataSource = Services.ContentTypeService.GetAllContentTypes();
+            this.cblDocTypes.DataTextField = "Name";
             this.cblDocTypes.DataValueField = "Alias";
             this.cblDocTypes.DataBind();
 
             // bind the templates
-            this.cblTemplates.DataSource = Template.GetAllAsList();
-            this.cblTemplates.DataTextField = "Text";
+            this.cblTemplates.DataSource = Services.FileService.GetTemplates();
+            this.cblTemplates.DataTextField = "Name";
             this.cblTemplates.DataValueField = "Alias";
             this.cblTemplates.DataBind();
         }
@@ -101,7 +98,7 @@ namespace Our.Umbraco.HttpsRedirect.Install
             // disable the dashboard control checkbox
             try
             {
-                var dashboardXml = xmlHelper.OpenAsXmlDocument(SystemFiles.DashboardConfig);
+                var dashboardXml = XmlHelper.OpenAsXmlDocument(SystemFiles.DashboardConfig);
                 if (dashboardXml.SelectSingleNode("//section[@alias = 'HttpsRedirectInstaller']") != null)
                 {
                     this.phDashboardControl.Visible = false;
