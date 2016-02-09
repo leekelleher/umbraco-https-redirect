@@ -7,5 +7,6 @@
     <add key="HttpsRedirect:Properties" value="" />
     <add key="HttpsRedirect:StripPort" value="False" />
     <add key="HttpsRedirect:UseTemporaryRedirects" value="False" />
+    <add key="HttpsRedirect:XForwardedProto" value="False" />
   </appSettings>
 </configuration>

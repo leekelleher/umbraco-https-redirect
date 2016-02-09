@@ -33,7 +33,7 @@
 		<br style="clear: both;" />
 
 		<h2>Properties</h2>
-		<p>Enter a comma-separated list of property aliases and values, in the format propertyAlias:value.<br/><em>Ex:  forceSsl:1,anotherPropertyAlias:off</em></p>
+		<p>Enter a comma-separated list of property aliases and values; in the format propertyAlias:value.<br/><em>e.g. <code>forceSsl:1,anotherPropertyAlias:off</code></em></p>
 		<asp:TextBox runat="server" ID="txtProperties" CssClass="umbEditorTextField" />
 
 		<br style="clear: both;" />

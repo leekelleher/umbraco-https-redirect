@@ -2,10 +2,11 @@
 
 HTTPS Redirect provides a simple mechanism to switch a URL from HTTP to HTTPS (SSL) based on the document-type (alias), node id or template alias.
 
-This package will add the following appSetting keys to your Web.config file: `HttpsRedirect:DocTypes`, `HttpsRedirect:PageIds`, `HttpsRedirect:Templates` `HttpsRedirect:StripPort`, `HttpsRedirect:UseTemporaryRedirects` and `HttpsRedirect:XForwardedProto`.
+This package will add the following appSetting keys to your Web.config file: `HttpsRedirect:DocTypes`, `HttpsRedirect:PageIds`, `HttpsRedirect:Properties`, `HttpsRedirect:Templates` `HttpsRedirect:StripPort`, `HttpsRedirect:UseTemporaryRedirects` and `HttpsRedirect:XForwardedProto`.
 
 * DocTypes - a comma separated list of doc type aliases that should be served as HTTPS.
 * PageIds - a comma separated list of page IDs that should be served as HTTPS.
+* Properties - a comma separated list of property-aliases and values; in the format `propertyAlias:value`.
 * Templates - a comma separated list of template aliases that should be served as HTTPS.
 * StripPort - used to strip out the port portion of the URL - use this when you use a non-standard port internally to your firewall (e.g. 81 or 444).
 * UseTemporaryRedirects - boolean value indicating whether HTTPS redirects should be temporary (302).
@@ -17,7 +18,7 @@ This package will add the following appSetting keys to your Web.config file: `Ht
 
 ### Installation
 
-> *Note:* HTTPS Redirect has been developed against **Umbraco v6.1.2** and will support that version and above.
+> *Note:* HTTPS Redirect has been developed against **Umbraco v6.1.6** and will support that version and above.
 
 HTTPS Redirect can be installed from either Our Umbraco or build manually from the source-code:
 
